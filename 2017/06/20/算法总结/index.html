@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.4" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.0.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="笔记,java,算法," />
+
+
+<meta name="description" content="介绍 开发以及平常阅读中所遇到的算法总结  猫扑素数(Mop primes)名词解释 素数: 即质数,有无限个. 质数定义为在大于1的自然数中,除了1和它本身以外不在有其他因数 猫扑素数: 形如以2开头,之后跟任意多个3的十进制整数并且是素数,则它就是猫扑素数. 如 2, 23, 233, 2333, 23333都是猫扑素数. 而233333则不是,它可以分解为353 x 661  代码实现">
+<meta name="keywords" content="笔记,java,算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法总结">
+<meta property="og:url" content="http://yoursite.com/2017/06/20/算法总结/index.html">
+<meta property="og:site_name" content="zhangxy">
+<meta property="og:description" content="介绍 开发以及平常阅读中所遇到的算法总结  猫扑素数(Mop primes)名词解释 素数: 即质数,有无限个. 质数定义为在大于1的自然数中,除了1和它本身以外不在有其他因数 猫扑素数: 形如以2开头,之后跟任意多个3的十进制整数并且是素数,则它就是猫扑素数. 如 2, 23, 233, 2333, 23333都是猫扑素数. 而233333则不是,它可以分解为353 x 661  代码实现">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-07-04T08:34:56.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="算法总结">
+<meta name="twitter:description" content="介绍 开发以及平常阅读中所遇到的算法总结  猫扑素数(Mop primes)名词解释 素数: 即质数,有无限个. 质数定义为在大于1的自然数中,除了1和它本身以外不在有其他因数 猫扑素数: 形如以2开头,之后跟任意多个3的十进制整数并且是素数,则它就是猫扑素数. 如 2, 23, 233, 2333, 23333都是猫扑素数. 而233333则不是,它可以分解为353 x 661  代码实现">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/06/20/算法总结/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>算法总结 | zhangxy</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?8087e85c4aa64b0bf3ad5b4a9ed23038";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">zhangxy</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/20/算法总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhangxy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhangxy">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">算法总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-20T14:50:00+08:00">2017-06-20</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/笔记/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><blockquote>
+<p>开发以及平常阅读中所遇到的算法总结</p>
+</blockquote>
+<h2 id="猫扑素数-Mop-primes"><a href="#猫扑素数-Mop-primes" class="headerlink" title="猫扑素数(Mop primes)"></a>猫扑素数(Mop primes)</h2><h3 id="名词解释"><a href="#名词解释" class="headerlink" title="名词解释"></a>名词解释</h3><ul>
+<li>素数: 即质数,有无限个. 质数定义为在大于1的自然数中,除了1和它本身以外不在有其他因数</li>
+<li>猫扑素数: 形如以2开头,之后跟任意多个3的十进制整数并且是素数,则它就是猫扑素数. 如 2, 23, 233, 2333, 23333都是猫扑素数. 而233333则不是,它可以分解为353 x 661</li>
+</ul>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><a id="more"></a>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">	<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Dmeo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000000000</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (isMop(i)) &#123;</span><br><span class="line">                <span class="keyword">if</span> (isPrimes(i)) &#123;</span><br><span class="line">                    System.out.println(i);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//判断是否是2333...的猫扑数</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Boolean <span class="title">isMop</span><span class="params">(<span class="keyword">int</span> num)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (num &lt; <span class="number">10</span>) <span class="keyword">return</span> num == <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">return</span> num % <span class="number">10</span> == <span class="number">3</span> &amp;&amp; isMop(num / <span class="number">10</span>); <span class="comment">//递归检测</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 判断是否是素数</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Boolean <span class="title">isPrimes</span><span class="params">(<span class="keyword">int</span> num)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (num &lt; <span class="number">2</span>) &#123; <span class="comment">//素数不能小于2</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="comment">//只需要判断到Math.sqrt(num),因为y= x1 * x2,那么x1或者x2中一定有一个数小于√y. </span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt; Math.sqrt(num); i++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (num % i == <span class="number">0</span>)  <span class="comment">//可以被整除,所以不是素数</span></span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">输出结果:</span><br><span class="line">	<span class="number">2</span></span><br><span class="line">	<span class="number">23</span></span><br><span class="line">	<span class="number">233</span></span><br><span class="line">	<span class="number">2333</span></span><br><span class="line">	<span class="number">23333</span></span><br></pre></td></tr></table></figure>
+<h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><h3 id="名词解释-1"><a href="#名词解释-1" class="headerlink" title="名词解释"></a>名词解释</h3><ul>
+<li>冒泡排序: 重复的走访要排序的数列,一次比较两个相邻的元素,如果他们的顺序错误,就把他们交换过来.直到不在需要交换即排序完成</li>
+</ul>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">	<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Dmeo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] arr = &#123;<span class="number">23</span>, <span class="number">44</span>, <span class="number">12</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">66</span>, <span class="number">9</span>&#125;;</span><br><span class="line">        bubbleSort(arr);</span><br><span class="line">        System.out.println(Arrays.toString(arr));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//冒泡排序</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">bubbleSort</span><span class="params">(<span class="keyword">int</span>[] arr)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.length - <span class="number">1</span>; i++) &#123; <span class="comment">// 外层控制趟数</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; arr.length - <span class="number">1</span> - i; j++) &#123; <span class="comment">//内增循环控制每趟排多少次</span></span><br><span class="line">                <span class="keyword">if</span> (arr[j] &gt; arr[j + <span class="number">1</span>]) &#123; <span class="comment">//如果前一位大于后一位则交换(可控制升序降序)</span></span><br><span class="line">                    <span class="keyword">int</span> temp = arr[j];</span><br><span class="line">                    arr[j] = arr[j + <span class="number">1</span>];</span><br><span class="line">                    arr[j + <span class="number">1</span>] = temp;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">输出结果:</span><br><span class="line">[<span class="number">3</span>, <span class="number">5</span>, <span class="number">9</span>, <span class="number">12</span>, <span class="number">23</span>, <span class="number">44</span>, <span class="number">66</span>]</span><br></pre></td></tr></table></figure>
+<h2 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h2><h3 id="名词解释-2"><a href="#名词解释-2" class="headerlink" title="名词解释"></a>名词解释</h3><ul>
+<li>选择排序:每一次从待排序的数据元素中选取最小(或最大)的一个元素,存放在序列的起始位置(或者末端位置),知道全部排序的数据元素排完 </li>
+</ul>
+<h3 id="代码实现-1"><a href="#代码实现-1" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//选择排序</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">bubbleSort</span><span class="params">(<span class="keyword">int</span>[] arr)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.length - <span class="number">1</span>; i++) &#123;</span><br><span class="line">           <span class="keyword">for</span> (<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt; arr.length; j++) &#123;</span><br><span class="line">               <span class="keyword">if</span> (arr[j] &lt; arr[i]) &#123;</span><br><span class="line">                   <span class="keyword">int</span> temp = arr[i];</span><br><span class="line">                   arr[i] = arr[j];</span><br><span class="line">                   arr[j] = temp;</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="斐波那契数列-兔子数列"><a href="#斐波那契数列-兔子数列" class="headerlink" title="斐波那契数列(兔子数列)"></a>斐波那契数列(兔子数列)</h2><h3 id="名词解释-3"><a href="#名词解释-3" class="headerlink" title="名词解释"></a>名词解释</h3><ul>
+<li>菲波那切数列指的是这样一个数列: 1,1,2,3,5,8,13,21,34…</li>
+</ul>
+<h3 id="代码实现-2"><a href="#代码实现-2" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//递归实现</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">FibonacciSequence</span><span class="params">(<span class="keyword">int</span> month)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(month&lt;=<span class="number">2</span>)&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> FibonacciSequence(n-<span class="number">1</span>) + FibonacciSequence(n-<span class="number">2</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//递推方式实现</span></span><br><span class="line"><span class="function"><span class="keyword">public</span>  <span class="keyword">int</span> <span class="title">FibonacciSequence2</span><span class="params">(<span class="keyword">int</span> month)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (month &lt;= <span class="number">2</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> month1 = <span class="number">1</span>, month2 = <span class="number">1</span>, sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; month - <span class="number">2</span>; i++) &#123;</span><br><span class="line">            sum = month1 + month2;</span><br><span class="line">            month1 = month2;</span><br><span class="line">            month2 = sum;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sum;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="水仙花数"><a href="#水仙花数" class="headerlink" title="水仙花数"></a>水仙花数</h2><h3 id="名词解释-4"><a href="#名词解释-4" class="headerlink" title="名词解释"></a>名词解释</h3><ul>
+<li>水仙花数是指一个三位数,其各位数字的立方和等于该数本身.例如153是一个”水仙花”数,因为153 = 1³+5³+3³;</li>
+</ul>
+<h3 id="代码实现-3"><a href="#代码实现-3" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isNarcissusNumber</span><span class="params">(<span class="keyword">int</span> num)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (num &lt; <span class="number">100</span> || num &gt; <span class="number">999</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">int</span> geWei = num % <span class="number">10</span>;</span><br><span class="line">        <span class="keyword">int</span> shiWei = (num % <span class="number">100</span>) / <span class="number">10</span>;</span><br><span class="line">        <span class="keyword">int</span> baiWei = num / <span class="number">100</span>;</span><br><span class="line">        <span class="keyword">int</span> sum = (geWei * geWei * geWei) + (shiWei * shiWei * shiWei) + (baiWei * baiWei * baiWei);</span><br><span class="line">        <span class="keyword">return</span> sum == num;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/笔记/" rel="tag"># 笔记</a>
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/22/命令行/" rel="next" title="命令行">
+                <i class="fa fa-chevron-left"></i> 命令行
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/30/React-Ntive性能优化笔记/" rel="prev" title="React-Ntive性能优化笔记">
+                React-Ntive性能优化笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/head.jpg"
+                alt="zhangxy" />
+            
+              <p class="site-author-name" itemprop="name">zhangxy</p>
+              <p class="site-description motion-element" itemprop="description">路漫漫其修远兮</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/zhangxuyang321" target="_blank" title="GitHub">GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="zhangxuyang321@gmail.com" target="_blank" title="E-Mail">E-Mail</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/u/5207372383/home" target="_blank" title="微博">微博</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#猫扑素数-Mop-primes"><span class="nav-number">2.</span> <span class="nav-text">猫扑素数(Mop primes)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#名词解释"><span class="nav-number">2.1.</span> <span class="nav-text">名词解释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现"><span class="nav-number">2.2.</span> <span class="nav-text">代码实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#冒泡排序"><span class="nav-number">3.</span> <span class="nav-text">冒泡排序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#名词解释-1"><span class="nav-number">3.1.</span> <span class="nav-text">名词解释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码"><span class="nav-number">3.2.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#选择排序"><span class="nav-number">4.</span> <span class="nav-text">选择排序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#名词解释-2"><span class="nav-number">4.1.</span> <span class="nav-text">名词解释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现-1"><span class="nav-number">4.2.</span> <span class="nav-text">代码实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#斐波那契数列-兔子数列"><span class="nav-number">5.</span> <span class="nav-text">斐波那契数列(兔子数列)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#名词解释-3"><span class="nav-number">5.1.</span> <span class="nav-text">名词解释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现-2"><span class="nav-number">5.2.</span> <span class="nav-text">代码实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#水仙花数"><span class="nav-number">6.</span> <span class="nav-text">水仙花数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#名词解释-4"><span class="nav-number">6.1.</span> <span class="nav-text">名词解释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现-3"><span class="nav-number">6.2.</span> <span class="nav-text">代码实现</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhangxy</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

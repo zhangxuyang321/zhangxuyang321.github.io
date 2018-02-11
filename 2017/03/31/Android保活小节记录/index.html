@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.4" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.0.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="android,保活,笔记," />
+
+
+<meta name="description" content="介绍因为实际业务需要实时接收推送,所以应用保活也成为了必要功能,我承认保活真的是耍流氓~ 灰色保活 灰色保活,目前应用最广泛的手段.利用Android系统漏洞来启动一个前台的Service,区别在于它不会在通知栏出现通知,用户基本没有察觉">
+<meta name="keywords" content="android,保活,笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android保活记录">
+<meta property="og:url" content="http://yoursite.com/2017/03/31/Android保活小节记录/index.html">
+<meta property="og:site_name" content="zhangxy">
+<meta property="og:description" content="介绍因为实际业务需要实时接收推送,所以应用保活也成为了必要功能,我承认保活真的是耍流氓~ 灰色保活 灰色保活,目前应用最广泛的手段.利用Android系统漏洞来启动一个前台的Service,区别在于它不会在通知栏出现通知,用户基本没有察觉">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://okskqdic8.bkt.clouddn.com/jincheng.png">
+<meta property="og:image" content="http://okskqdic8.bkt.clouddn.com/youxianji.png">
+<meta property="og:updated_time" content="2017-03-31T11:21:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android保活记录">
+<meta name="twitter:description" content="介绍因为实际业务需要实时接收推送,所以应用保活也成为了必要功能,我承认保活真的是耍流氓~ 灰色保活 灰色保活,目前应用最广泛的手段.利用Android系统漏洞来启动一个前台的Service,区别在于它不会在通知栏出现通知,用户基本没有察觉">
+<meta name="twitter:image" content="http://okskqdic8.bkt.clouddn.com/jincheng.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/03/31/Android保活小节记录/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>Android保活记录 | zhangxy</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?8087e85c4aa64b0bf3ad5b4a9ed23038";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">zhangxy</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/31/Android保活小节记录/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhangxy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhangxy">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android保活记录</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-31T16:41:43+08:00">2017-03-31</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/笔记/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>因为实际业务需要实时接收推送,所以应用保活也成为了必要功能,我承认保活真的是耍流氓~</p>
+<h2 id="灰色保活"><a href="#灰色保活" class="headerlink" title="灰色保活"></a>灰色保活</h2><blockquote>
+<p>灰色保活,目前应用最广泛的手段.利用Android系统漏洞来启动一个前台的Service,区别在于它不会在通知栏出现通知,用户基本没有察觉</p>
+</blockquote>
+<a id="more"></a>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">int</span> KEEP_ID = <span class="number">123456</span>; </span><br><span class="line"><span class="keyword">if</span> (Build.VERSION.SDK_INT &lt; <span class="number">18</span>) &#123;</span><br><span class="line">           startForeground(KEEP_ID, <span class="keyword">new</span> Notification());<span class="comment">//API &lt; 18 ，此方法能有效隐藏Notification上的图标</span></span><br><span class="line">       &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">           Intent keep = <span class="keyword">new</span> Intent(<span class="keyword">this</span>, KeepInnerService.class); </span><br><span class="line">           startService(keep);</span><br><span class="line">           startForeground(KEEP_ID, <span class="keyword">new</span> Notification());</span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure>
+<p>KeepInnerService</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">KeepInnerService</span> <span class="keyword">extends</span> <span class="title">Service</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">int</span> KEEP_ID = -<span class="number">1001</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">KeepInnerService</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">onStartCommand</span><span class="params">(Intent intent, <span class="keyword">int</span> flags, <span class="keyword">int</span> startId)</span> </span>&#123;</span><br><span class="line">        startForeground(KEEP_ID, <span class="keyword">new</span> Notification());</span><br><span class="line">        stopForeground(<span class="keyword">true</span>);</span><br><span class="line">        stopSelf();</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.onStartCommand(intent, flags, startId);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="1像素保活-QQ神技"><a href="#1像素保活-QQ神技" class="headerlink" title="1像素保活(QQ神技)"></a>1像素保活(QQ神技)</h2><h3 id="创建一个Activity"><a href="#创建一个Activity" class="headerlink" title="创建一个Activity"></a>创建一个Activity</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">   <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">       PkApplication.addActivity(<span class="keyword">this</span>);</span><br><span class="line">       PkApplication.keppLiveInstance = <span class="keyword">this</span>;</span><br><span class="line">       Window window = getWindow();</span><br><span class="line">       window.setGravity(Gravity.LEFT|Gravity.TOP);</span><br><span class="line">       WindowManager.LayoutParams attributes = window.getAttributes();</span><br><span class="line">       attributes.x=<span class="number">0</span>;</span><br><span class="line">       attributes.y=<span class="number">0</span>;</span><br><span class="line">       attributes.height=<span class="number">0</span>;</span><br><span class="line">       attributes.width=<span class="number">0</span>;</span><br><span class="line">       window.setAttributes(attributes);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="设置清单文件"><a href="#设置清单文件" class="headerlink" title="设置清单文件"></a>设置清单文件</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">activity</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:name</span>=<span class="string">".weight.activitys.KeepLiveActivity"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:configChanges</span>=<span class="string">"keyboardHidden|orientation|screenSize|navigation|keyboard"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:excludeFromRecents</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:exported</span>=<span class="string">"false"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:finishOnTaskLaunch</span>=<span class="string">"false"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:launchMode</span>=<span class="string">"singleInstance"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:process</span>=<span class="string">":live"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:theme</span>=<span class="string">"@style/keepLive"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="android-configChanges-未验证"><a href="#android-configChanges-未验证" class="headerlink" title="android:configChanges(未验证)"></a>android:configChanges(未验证)</h4><ol>
+<li><p>不设置此属性, Activity切换横竖屏时会重新调用各个生命周期,切横屏会执行一次,切竖屏会执行两次</p>
+</li>
+<li><p>设置android:configChanges=”orientation”,调用各个生命周期,切横竖屏都是一次</p>
+</li>
+<li><p>设置Activity的android:configChanges=”orientation|keyboardHidden”时，切屏不会重新调用各个生命周期，只会执行onConfigurationChanged方法</p>
+</li>
+</ol>
+<h4 id="android-excludeFromRecents"><a href="#android-excludeFromRecents" class="headerlink" title="android:excludeFromRecents"></a>android:excludeFromRecents</h4><p>是否显示在最近打开的Activity列表里</p>
+<h4 id="android-exported"><a href="#android-exported" class="headerlink" title="android:exported"></a>android:exported</h4><p>是否允许activity被其他程序调用</p>
+<h4 id="android-finishOnTaskLaunch"><a href="#android-finishOnTaskLaunch" class="headerlink" title="android:finishOnTaskLaunch"></a>android:finishOnTaskLaunch</h4><p>当用户重启这个任务的时候是否关闭已打开的Activity</p>
+<h4 id="android-process"><a href="#android-process" class="headerlink" title="android:process"></a>android:process</h4><p>一个Activity运行时所在的进程名,所有组件运行在默认的进程中,这个进程跟包名一直. process属性能够为所有组件设定一个新的默认值.但任何组件都可以覆盖这个默认值,允许你将你的程序放在多进程中使用.如果这个属性被”:”开头命名,当这个Activity运行时,一个新的专属于这个程序的进程将被创建.如果以小写字母开头,这个Activity将运行在全局的进程中</p>
+<h3 id="主题设置"><a href="#主题设置" class="headerlink" title="主题设置"></a>主题设置</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"keepLive"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:windowBackground"</span>&gt;</span>@android:color/transparent<span class="tag">&lt;/<span class="name">item</span>&gt;</span> //背景</span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:windowFrame"</span>&gt;</span>@null<span class="tag">&lt;/<span class="name">item</span>&gt;</span> //边框</span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:windowNoTitle"</span>&gt;</span>true<span class="tag">&lt;/<span class="name">item</span>&gt;</span> //有无标题</span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:windowIsFloating"</span>&gt;</span>true<span class="tag">&lt;/<span class="name">item</span>&gt;</span> //是否浮现在Activity之上</span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:windowIsTranslucent"</span>&gt;</span>true<span class="tag">&lt;/<span class="name">item</span>&gt;</span> //半透明</span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:windowContentOverlay"</span>&gt;</span>@null<span class="tag">&lt;/<span class="name">item</span>&gt;</span> //窗口内容放置的Drawable资源</span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:backgroundDimEnabled"</span>&gt;</span>false<span class="tag">&lt;/<span class="name">item</span>&gt;</span> // 模糊</span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:windowAnimationStyle"</span>&gt;</span>@null<span class="tag">&lt;/<span class="name">item</span>&gt;</span> //Dialog 进入、退出动画</span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:windowDisablePreview"</span>&gt;</span>true<span class="tag">&lt;/<span class="name">item</span>&gt;</span> //禁用默认启动窗口</span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:windowNoDisplay"</span>&gt;</span>false<span class="tag">&lt;/<span class="name">item</span>&gt;</span> //当前启动的窗口不可见</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="监听锁屏-解锁启动-KeepLiveActivity"><a href="#监听锁屏-解锁启动-KeepLiveActivity" class="headerlink" title="监听锁屏,解锁启动 KeepLiveActivity"></a>监听锁屏,解锁启动 KeepLiveActivity</h3><p>随着Android版本的升高,目前静态监听屏幕锁屏,解锁已不可用,只能动态注册</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> BroadcastReceiver screenReciver = <span class="keyword">new</span> BroadcastReceiver() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceive</span><span class="params">(Context context, Intent intent)</span> </span>&#123;</span><br><span class="line">            String action = intent.getAction();</span><br><span class="line">            <span class="keyword">if</span>(action.equals(Intent.ACTION_SCREEN_OFF))&#123;</span><br><span class="line">                Intent keep = <span class="keyword">new</span> Intent(getApplicationContext(),KeepLiveActivity.class);</span><br><span class="line">                startActivity(keep);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (action.equals(Intent.ACTION_USER_PRESENT))&#123;</span><br><span class="line">                <span class="keyword">if</span>(<span class="keyword">null</span>!=PkApplication.keppLiveInstance)&#123;</span><br><span class="line">                    PkApplication.keppLiveInstance.finish();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initScreenBroadcastReceiver</span><span class="params">()</span></span>&#123;</span><br><span class="line">        IntentFilter intentFilter = <span class="keyword">new</span> IntentFilter();</span><br><span class="line">        intentFilter.addAction(Intent.ACTION_SCREEN_OFF);</span><br><span class="line">        intentFilter.addAction(Intent.ACTION_USER_PRESENT);</span><br><span class="line">        registerReceiver(screenReciver,intentFilter);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">注意</span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onDestroy();</span><br><span class="line">        unregisterReceiver(screenReciver); <span class="comment">//记得卸载监听</span></span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<p>注:<br>    此方法使用后出现了,在APP活动可见情况下锁屏,解锁后出现APP退出,可能是android:launchMode=”singleInstance”原因,但是当APP点击HOME键以后再锁屏解锁则不受影响,目前还不清楚原因</p>
+<p>解决办法:<br>    在接受到锁屏通知前,先调用HOME功能</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Intent home = <span class="keyword">new</span> Intent(Intent.ACTION_MAIN);</span><br><span class="line">               home.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);</span><br><span class="line">               home.addCategory(Intent.CATEGORY_HOME);</span><br><span class="line">               startActivity(home);</span><br></pre></td></tr></table></figure>
+<h2 id="adb-命令"><a href="#adb-命令" class="headerlink" title="adb 命令"></a>adb 命令</h2><p>进入adb  shell 模式</p>
+<h3 id="打印指定包名的进程中所有Service信息"><a href="#打印指定包名的进程中所有Service信息" class="headerlink" title="打印指定包名的进程中所有Service信息"></a>打印指定包名的进程中所有Service信息</h3><p>dumpsys activity services PackageName</p>
+<h3 id="查看进程优先级"><a href="#查看进程优先级" class="headerlink" title="查看进程优先级"></a>查看进程优先级</h3><ul>
+<li>ps | grep PackageName  获取指定包名的进程信息,<br>  如果报 grep: can’t execute: Permission denied可以先ps 打印所有的进程信息,复制到文本中,通过包名查找找到对应的进程ID</li>
+</ul>
+<p><img src="http://okskqdic8.bkt.clouddn.com/jincheng.png" width="50%" height="50%"></p>
+<ul>
+<li>cat /proc/进程ID/oom_adj</li>
+</ul>
+<p><img src="http://okskqdic8.bkt.clouddn.com/youxianji.png" width="50%" height="50%"></p>
+<h3 id="oom-adj概念"><a href="#oom-adj概念" class="headerlink" title="oom_adj概念"></a>oom_adj概念</h3><ul>
+<li>进程的oom_adj越大,表示进程的优先级越低,越容易被回收;越少,表示进程优先级越高</li>
+<li>普通APP的oom_adj&gt;=0,系统进程的oom_adj才可能&lt;0</li>
+<li>APP退出到后台所有的进程优先级都会降低. 其中UI进程降低的最为明显,因为它占用的内存资源最多.</li>
+</ul>
+<h2 id="Tanks"><a href="#Tanks" class="headerlink" title="Tanks"></a>Tanks</h2><p><a href="http://www.jianshu.com/p/63aafe3c12af" target="_blank" rel="noopener">保活攻略</a></p>
+<p><a href="http://www.cnblogs.com/fly-fish/p/4872289.html" target="_blank" rel="noopener">Android属性控件大全</a></p>
+<p><a href="http://blog.csdn.net/babybear1224/article/details/50055113" target="_blank" rel="noopener">Android系统主题属性</a></p>
+<p><a href="http://blog.csdn.net/zhaokaiqiang1992/article/details/19921703" target="_blank" rel="noopener">configChanges属性</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/android/" rel="tag"># android</a>
+          
+            <a href="/tags/保活/" rel="tag"># 保活</a>
+          
+            <a href="/tags/笔记/" rel="tag"># 笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/17/JavaScript基础笔记-面向对象/" rel="next" title="JavaScript基础笔记-面向对象">
+                <i class="fa fa-chevron-left"></i> JavaScript基础笔记-面向对象
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/05/JavaScrip浏览器对象/" rel="prev" title="JavaScrip浏览器对象">
+                JavaScrip浏览器对象 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/head.jpg"
+                alt="zhangxy" />
+            
+              <p class="site-author-name" itemprop="name">zhangxy</p>
+              <p class="site-description motion-element" itemprop="description">路漫漫其修远兮</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/zhangxuyang321" target="_blank" title="GitHub">GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="zhangxuyang321@gmail.com" target="_blank" title="E-Mail">E-Mail</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/u/5207372383/home" target="_blank" title="微博">微博</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#灰色保活"><span class="nav-number">2.</span> <span class="nav-text">灰色保活</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1像素保活-QQ神技"><span class="nav-number">3.</span> <span class="nav-text">1像素保活(QQ神技)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建一个Activity"><span class="nav-number">3.1.</span> <span class="nav-text">创建一个Activity</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置清单文件"><span class="nav-number">3.2.</span> <span class="nav-text">设置清单文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#android-configChanges-未验证"><span class="nav-number">3.2.1.</span> <span class="nav-text">android:configChanges(未验证)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#android-excludeFromRecents"><span class="nav-number">3.2.2.</span> <span class="nav-text">android:excludeFromRecents</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#android-exported"><span class="nav-number">3.2.3.</span> <span class="nav-text">android:exported</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#android-finishOnTaskLaunch"><span class="nav-number">3.2.4.</span> <span class="nav-text">android:finishOnTaskLaunch</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#android-process"><span class="nav-number">3.2.5.</span> <span class="nav-text">android:process</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主题设置"><span class="nav-number">3.3.</span> <span class="nav-text">主题设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#监听锁屏-解锁启动-KeepLiveActivity"><span class="nav-number">3.4.</span> <span class="nav-text">监听锁屏,解锁启动 KeepLiveActivity</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#adb-命令"><span class="nav-number">4.</span> <span class="nav-text">adb 命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#打印指定包名的进程中所有Service信息"><span class="nav-number">4.1.</span> <span class="nav-text">打印指定包名的进程中所有Service信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看进程优先级"><span class="nav-number">4.2.</span> <span class="nav-text">查看进程优先级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#oom-adj概念"><span class="nav-number">4.3.</span> <span class="nav-text">oom_adj概念</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tanks"><span class="nav-number">5.</span> <span class="nav-text">Tanks</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhangxy</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

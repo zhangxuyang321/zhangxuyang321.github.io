@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.4" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.0.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="android,笔记,源码解析," />
+
+
+<meta name="description" content="介绍EventBus在Android开发中运用很广泛,在观看其源码后受益颇深,现将源码笔记整理如下 EventBus注册流程注册部分整体流程图如下">
+<meta name="keywords" content="android,笔记,源码解析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="EventBus源码解析">
+<meta property="og:url" content="http://yoursite.com/2017/08/17/EventBus源码解析/index.html">
+<meta property="og:site_name" content="zhangxy">
+<meta property="og:description" content="介绍EventBus在Android开发中运用很广泛,在观看其源码后受益颇深,现将源码笔记整理如下 EventBus注册流程注册部分整体流程图如下">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://okskqdic8.bkt.clouddn.com/register.png">
+<meta property="og:image" content="http://okskqdic8.bkt.clouddn.com/register%231.png">
+<meta property="og:image" content="http://okskqdic8.bkt.clouddn.com/register%232.png">
+<meta property="og:image" content="http://okskqdic8.bkt.clouddn.com/register%233.png">
+<meta property="og:image" content="http://okskqdic8.bkt.clouddn.com/register%234.png">
+<meta property="og:image" content="http://okskqdic8.bkt.clouddn.com/register%235.png">
+<meta property="og:image" content="http://okskqdic8.bkt.clouddn.com/register%236.png">
+<meta property="og:image" content="http://okskqdic8.bkt.clouddn.com/register%237.png">
+<meta property="og:image" content="http://okskqdic8.bkt.clouddn.com/register%238.png">
+<meta property="og:image" content="http://okskqdic8.bkt.clouddn.com/register%239.png">
+<meta property="og:image" content="http://okskqdic8.bkt.clouddn.com/register%2310.png">
+<meta property="og:image" content="http://okskqdic8.bkt.clouddn.com/post.png">
+<meta property="og:image" content="http://okskqdic8.bkt.clouddn.com/post%231.png">
+<meta property="og:image" content="http://okskqdic8.bkt.clouddn.com/post%232.png">
+<meta property="og:image" content="http://okskqdic8.bkt.clouddn.com/post%233.png">
+<meta property="og:image" content="http://okskqdic8.bkt.clouddn.com/post%234.png">
+<meta property="og:image" content="http://okskqdic8.bkt.clouddn.com/post%235.png">
+<meta property="og:updated_time" content="2017-08-17T10:54:40.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="EventBus源码解析">
+<meta name="twitter:description" content="介绍EventBus在Android开发中运用很广泛,在观看其源码后受益颇深,现将源码笔记整理如下 EventBus注册流程注册部分整体流程图如下">
+<meta name="twitter:image" content="http://okskqdic8.bkt.clouddn.com/register.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/08/17/EventBus源码解析/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>EventBus源码解析 | zhangxy</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?8087e85c4aa64b0bf3ad5b4a9ed23038";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">zhangxy</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/17/EventBus源码解析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhangxy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhangxy">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">EventBus源码解析</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-17T17:33:31+08:00">2017-08-17</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/源码解析/" itemprop="url" rel="index"><span itemprop="name">源码解析</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>EventBus在Android开发中运用很广泛,在观看其源码后受益颇深,现将源码笔记整理如下</p>
+<h2 id="EventBus注册流程"><a href="#EventBus注册流程" class="headerlink" title="EventBus注册流程"></a>EventBus注册流程</h2><h3 id="注册部分整体流程图如下"><a href="#注册部分整体流程图如下" class="headerlink" title="注册部分整体流程图如下"></a>注册部分整体流程图如下</h3><ul>
+<li><img src="http://okskqdic8.bkt.clouddn.com/register.png" width="70%" height="70%"></li>
+</ul>
+<a id="more"></a>
+<h3 id="SubscriberMethodFinder类"><a href="#SubscriberMethodFinder类" class="headerlink" title="SubscriberMethodFinder类"></a>SubscriberMethodFinder类</h3><h4 id="findSubscriberMethods-Class-lt-gt-subscriberClass"><a href="#findSubscriberMethods-Class-lt-gt-subscriberClass" class="headerlink" title="findSubscriberMethods(Class&lt;?&gt; subscriberClass)"></a>findSubscriberMethods(Class&lt;?&gt; subscriberClass)</h4><ul>
+<li><p>subscriberClass 订阅者的Class对象</p>
+<p>  <img src="http://okskqdic8.bkt.clouddn.com/register%231.png" width="70%" height="70%"></p>
+</li>
+<li><p>此方法主要是用来判断是否存在缓存,如果不存在缓存则调用findUsingInfo方法寻找订阅的方法集</p>
+</li>
+</ul>
+<h4 id="findUsingInfo-Class-lt-gt-subscribeClass"><a href="#findUsingInfo-Class-lt-gt-subscribeClass" class="headerlink" title="findUsingInfo(Class&lt;?&gt; subscribeClass)"></a>findUsingInfo(Class&lt;?&gt; subscribeClass)</h4><ul>
+<li><p>subscriberClass 订阅者的Class对象</p>
+<p>  <img src="http://okskqdic8.bkt.clouddn.com/register%232.png" width="70%" height="70%"></p>
+</li>
+<li><p>在此方法中,如果我们开启了索引,在编译时会生成订阅信息通过getSubscriberInfo()方法将订阅信息封装进FindState中.如果没有使用索引则调用findUsingReflectionInSingleClass()方法寻找订阅信息.无论调用哪个方法都会将信息封装进FindState中.</p>
+</li>
+</ul>
+<h4 id="FindState类介绍"><a href="#FindState类介绍" class="headerlink" title="FindState类介绍"></a>FindState类介绍</h4><ul>
+<li><p>FindSate是SubscriberMethodFinder类的静态内部类.<br><img src="http://okskqdic8.bkt.clouddn.com/register%233.png" width="70%" height="70%"></p>
+</li>
+<li><p>FindState的两级校验在findUsingReflectionInSingleClass中说明</p>
+</li>
+</ul>
+<h4 id="findUsingReflectionInSingleClass-FindState-findState"><a href="#findUsingReflectionInSingleClass-FindState-findState" class="headerlink" title="findUsingReflectionInSingleClass(FindState findState)"></a>findUsingReflectionInSingleClass(FindState findState)</h4><ul>
+<li><img src="http://okskqdic8.bkt.clouddn.com/register%234.png" width="70%" height="70%"></li>
+<li>FindState中的双重校验</li>
+<li>checkAdd()</li>
+</ul>
+<blockquote>
+<p>   在checkAdd方法中,anyMethodByEventType是以事件类型为key,订阅事件的方法为value的HashMap.一般来说我在订阅类的方法中对同一个事件的监听只有一个方法,所以基本上existing都是为null,然后返回.但是不排除在父类中也同样对事件监听或者本类中多个方法对通一个事件监听,所以还需要使用checkAddWithMethodSingnature()方法进行第二层校验<br> <img src="http://okskqdic8.bkt.clouddn.com/register%235.png" width="70%" height="70%"></p>
+</blockquote>
+<ul>
+<li>checkAddWithMethodSingnature()</li>
+</ul>
+<blockquote>
+<p>由checkAddWithMethodSingnature()方法可知,同一个类中可以有多个方法对同一事件监听<br><img src="http://okskqdic8.bkt.clouddn.com/register%236.png" width="70%" height="70%"></p>
+</blockquote>
+<ul>
+<li>此时寻找订阅信息已经完成,又回到了findUsingInfo()方法中,并向下执行到getMethodsAndRelease(FindState findState)方法.在getMethodAndRelease()方法中将FindState中的subscriberMethods取出返回并将FindSate重置为初始状态.此时SubscriberMethodFinder类执行完毕又回到了EventBus类的register()方法中,然后将subscriberMethods遍历调用subscribe方法将订阅关系维护进EventBus对应的三个Map集合中.</li>
+</ul>
+<h3 id="subscribe-Object-subscriber-SubscriberMethod-subscriberMethod"><a href="#subscribe-Object-subscriber-SubscriberMethod-subscriberMethod" class="headerlink" title="subscribe(Object subscriber,SubscriberMethod subscriberMethod)"></a>subscribe(Object subscriber,SubscriberMethod subscriberMethod)</h3><ul>
+<li>EventBus中三个订阅关系的HashMap<br><img src="http://okskqdic8.bkt.clouddn.com/register%237.png" width="70%" height="70%"></li>
+<li>subscriptionsByEventType关系维护如下<br><img src="http://okskqdic8.bkt.clouddn.com/register%238.png" width="70%" height="70%"></li>
+<li>typesBySubscriber维护如下<br><img src="http://okskqdic8.bkt.clouddn.com/register%239.png" width="70%" height="70%"></li>
+<li>stickyEvents的维护是在发送粘性事件是存入的,如下<br><img src="http://okskqdic8.bkt.clouddn.com/register%2310.png" width="70%" height="70%"></li>
+</ul>
+<h2 id="EventBus-事件发送"><a href="#EventBus-事件发送" class="headerlink" title="EventBus 事件发送"></a>EventBus 事件发送</h2><h3 id="事件发送整体流程图如下"><a href="#事件发送整体流程图如下" class="headerlink" title="事件发送整体流程图如下"></a>事件发送整体流程图如下</h3><ul>
+<li><img src="http://okskqdic8.bkt.clouddn.com/post.png" width="70%" height="70%"><h3 id="post-Object-event"><a href="#post-Object-event" class="headerlink" title="post(Object event)"></a>post(Object event)</h3></li>
+<li><img src="http://okskqdic8.bkt.clouddn.com/post%231.png" width="70%" height="70%"></li>
+</ul>
+<h3 id="postSingleEvent-Object-event-PostingThreadState-postingState"><a href="#postSingleEvent-Object-event-PostingThreadState-postingState" class="headerlink" title="postSingleEvent(Object event, PostingThreadState postingState)"></a>postSingleEvent(Object event, PostingThreadState postingState)</h3><ul>
+<li><img src="http://okskqdic8.bkt.clouddn.com/post%232.png" width="70%" height="70%"></li>
+</ul>
+<h3 id="postSingleEventForEventType-Object-event-PostingThreadState-postingState-Class-lt-gt-eventClass"><a href="#postSingleEventForEventType-Object-event-PostingThreadState-postingState-Class-lt-gt-eventClass" class="headerlink" title="postSingleEventForEventType(Object event, PostingThreadState postingState, Class&lt;?&gt; eventClass)"></a>postSingleEventForEventType(Object event, PostingThreadState postingState, Class&lt;?&gt; eventClass)</h3><p>postSingleEventForEventType方法主要是根据事件类型的Class对象回去到对应的subscriptions,然后遍历调用postToSubscription()方法</p>
+<h3 id="postToSubscription-Subscription-subscription-Object-event-boolean-isMainThread"><a href="#postToSubscription-Subscription-subscription-Object-event-boolean-isMainThread" class="headerlink" title="postToSubscription(Subscription subscription, Object event, boolean isMainThread);"></a>postToSubscription(Subscription subscription, Object event, boolean isMainThread);</h3><p>postToSubscription方法主要是用来判断是否要切换线程的,isMainThread是标示post发送时所处的线程是否是主线程,subscription.subscriberMethod.threadMode标示接受事件希望所处的线程,通过比较,如果一致则调用invokeSubscriber()方法通过反射调用.如果不一致则通过对应的MainThreadPoster,BackgroundPoster和AsyncPoster来进行线程切换.</p>
+<h3 id="invokeSubscriber-Subscription-subscription-Object-event"><a href="#invokeSubscriber-Subscription-subscription-Object-event" class="headerlink" title="invokeSubscriber(Subscription subscription, Object event)"></a>invokeSubscriber(Subscription subscription, Object event)</h3><ul>
+<li><img src="http://okskqdic8.bkt.clouddn.com/post%233.png" width="70%" height="70%"></li>
+</ul>
+<h2 id="粘性事件的发送"><a href="#粘性事件的发送" class="headerlink" title="粘性事件的发送"></a>粘性事件的发送</h2><p>粘性事件关系维护是在发送的时候,粘性事件的处理是在1.注册流程中的subscribe中,与正常事件的处理正好相反.这么做的原因是因为粘性事件发送的时候,还没有订阅者订阅此事件,所以无法发送.而订阅关系的发生最终会调用subscribe中,所以在此方法中处理粘性事件,代码如下:</p>
+<ul>
+<li><img src="http://okskqdic8.bkt.clouddn.com/post%234.png" width="70%" height="70%"></li>
+<li><img src="http://okskqdic8.bkt.clouddn.com/post%235.png" width="70%" height="70%"></li>
+<li>粘性事件的处理最终会调用postToSubscription()方法,以后就跟普通事件一样处理了</li>
+</ul>
+<h2 id="注解相关传送门"><a href="#注解相关传送门" class="headerlink" title="注解相关传送门"></a>注解相关传送门</h2><ul>
+<li><a href="http://www.jianshu.com/p/9ca78aa4ab4d" target="_blank" rel="noopener">Android注解入门</a></li>
+<li><a href="https://race604.com/annotation-processing/" target="_blank" rel="noopener">java注解处理器</a></li>
+<li><a href="http://blog.csdn.net/lmj623565791/article/details/51931859" target="_blank" rel="noopener">鸿洋大神编写基于编译时注解项目</a></li>
+<li><a href="https://github.com/square/javapoet" target="_blank" rel="noopener">自动生成代码三方库</a></li>
+<li><a href="http://www.jianshu.com/p/95f12f72f69a" target="_blank" rel="noopener">javapoet使用解析</a></li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/android/" rel="tag"># android</a>
+          
+            <a href="/tags/笔记/" rel="tag"># 笔记</a>
+          
+            <a href="/tags/源码解析/" rel="tag"># 源码解析</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/30/React-Ntive性能优化笔记/" rel="next" title="React-Ntive性能优化笔记">
+                <i class="fa fa-chevron-left"></i> React-Ntive性能优化笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/head.jpg"
+                alt="zhangxy" />
+            
+              <p class="site-author-name" itemprop="name">zhangxy</p>
+              <p class="site-description motion-element" itemprop="description">路漫漫其修远兮</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/zhangxuyang321" target="_blank" title="GitHub">GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="zhangxuyang321@gmail.com" target="_blank" title="E-Mail">E-Mail</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/u/5207372383/home" target="_blank" title="微博">微博</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#EventBus注册流程"><span class="nav-number">2.</span> <span class="nav-text">EventBus注册流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#注册部分整体流程图如下"><span class="nav-number">2.1.</span> <span class="nav-text">注册部分整体流程图如下</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SubscriberMethodFinder类"><span class="nav-number">2.2.</span> <span class="nav-text">SubscriberMethodFinder类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#findSubscriberMethods-Class-lt-gt-subscriberClass"><span class="nav-number">2.2.1.</span> <span class="nav-text">findSubscriberMethods(Class&lt;?&gt; subscriberClass)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#findUsingInfo-Class-lt-gt-subscribeClass"><span class="nav-number">2.2.2.</span> <span class="nav-text">findUsingInfo(Class&lt;?&gt; subscribeClass)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FindState类介绍"><span class="nav-number">2.2.3.</span> <span class="nav-text">FindState类介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#findUsingReflectionInSingleClass-FindState-findState"><span class="nav-number">2.2.4.</span> <span class="nav-text">findUsingReflectionInSingleClass(FindState findState)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#subscribe-Object-subscriber-SubscriberMethod-subscriberMethod"><span class="nav-number">2.3.</span> <span class="nav-text">subscribe(Object subscriber,SubscriberMethod subscriberMethod)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#EventBus-事件发送"><span class="nav-number">3.</span> <span class="nav-text">EventBus 事件发送</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#事件发送整体流程图如下"><span class="nav-number">3.1.</span> <span class="nav-text">事件发送整体流程图如下</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#post-Object-event"><span class="nav-number">3.2.</span> <span class="nav-text">post(Object event)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#postSingleEvent-Object-event-PostingThreadState-postingState"><span class="nav-number">3.3.</span> <span class="nav-text">postSingleEvent(Object event, PostingThreadState postingState)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#postSingleEventForEventType-Object-event-PostingThreadState-postingState-Class-lt-gt-eventClass"><span class="nav-number">3.4.</span> <span class="nav-text">postSingleEventForEventType(Object event, PostingThreadState postingState, Class&lt;?&gt; eventClass)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#postToSubscription-Subscription-subscription-Object-event-boolean-isMainThread"><span class="nav-number">3.5.</span> <span class="nav-text">postToSubscription(Subscription subscription, Object event, boolean isMainThread);</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#invokeSubscriber-Subscription-subscription-Object-event"><span class="nav-number">3.6.</span> <span class="nav-text">invokeSubscriber(Subscription subscription, Object event)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#粘性事件的发送"><span class="nav-number">4.</span> <span class="nav-text">粘性事件的发送</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注解相关传送门"><span class="nav-number">5.</span> <span class="nav-text">注解相关传送门</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhangxy</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

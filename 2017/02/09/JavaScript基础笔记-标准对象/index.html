@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.4" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.0.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="JavaScript基础笔记," />
+
+
+<meta name="description" content="本节记录了   标准对象 Date   标准对象Javascript中一切都是对象,为了区分对象类型,我们用 typeof 操作符获取对象类型,它总是返回一个字符串:">
+<meta name="keywords" content="JavaScript基础笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript基础笔记-标准对象">
+<meta property="og:url" content="http://yoursite.com/2017/02/09/JavaScript基础笔记-标准对象/index.html">
+<meta property="og:site_name" content="zhangxy">
+<meta property="og:description" content="本节记录了   标准对象 Date   标准对象Javascript中一切都是对象,为了区分对象类型,我们用 typeof 操作符获取对象类型,它总是返回一个字符串:">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-02-09T08:59:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript基础笔记-标准对象">
+<meta name="twitter:description" content="本节记录了   标准对象 Date   标准对象Javascript中一切都是对象,为了区分对象类型,我们用 typeof 操作符获取对象类型,它总是返回一个字符串:">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/02/09/JavaScript基础笔记-标准对象/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>JavaScript基础笔记-标准对象 | zhangxy</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?8087e85c4aa64b0bf3ad5b4a9ed23038";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">zhangxy</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/09/JavaScript基础笔记-标准对象/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhangxy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhangxy">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JavaScript基础笔记-标准对象</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-09T10:25:20+08:00">2017-02-09</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本节记录了 </p>
+<ul>
+<li>标准对象</li>
+<li>Date</li>
+</ul>
+<hr>
+<h2 id="标准对象"><a href="#标准对象" class="headerlink" title="标准对象"></a>标准对象</h2><p>Javascript中一切都是对象,为了区分对象类型,我们用 <strong>typeof</strong> 操作符获取对象类型,它总是返回一个字符串:</p>
+<a id="more"></a>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> <span class="number">123</span>; <span class="comment">// 'number'</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">NaN</span>; <span class="comment">// 'number'</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="string">'str'</span>; <span class="comment">// 'string'</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">true</span>; <span class="comment">// 'boolean'</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">undefined</span>; <span class="comment">// 'undefined'</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="built_in">Math</span>.abs; <span class="comment">// 'function'</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">null</span>; <span class="comment">// 'object'</span></span><br><span class="line"><span class="keyword">typeof</span> []; <span class="comment">// 'object'</span></span><br><span class="line"><span class="keyword">typeof</span> &#123;&#125;; <span class="comment">// 'object'</span></span><br></pre></td></tr></table></figure>
+<p><strong>特别注意 null 的类型是 Object,Array的类型也是 Object,如果我们用typeof将无法区分出null, array 和通常意义的object–{}</strong></p>
+<h2 id="包装对象"><a href="#包装对象" class="headerlink" title="包装对象"></a>包装对象</h2><p>包装对象用new创建</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> n = <span class="keyword">new</span> <span class="built_in">Number</span>(<span class="number">123</span>); <span class="comment">// 123,生成了新的包装类型</span></span><br><span class="line"><span class="keyword">var</span> b = <span class="keyword">new</span> <span class="built_in">Boolean</span>(<span class="literal">true</span>); <span class="comment">// true,生成了新的包装类型</span></span><br><span class="line"><span class="keyword">var</span> s = <span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">'str'</span>); <span class="comment">// 'str',生成了新的包装类型</span></span><br></pre></td></tr></table></figure>
+<p>虽然看上去一模一样,但是经过以上包装后,他们的类型全都变成了object!包装对象和原始值通过===比较会返回false</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> <span class="keyword">new</span> <span class="built_in">Number</span>(<span class="number">123</span>); <span class="comment">// 'object'</span></span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Number</span>(<span class="number">123</span>) === <span class="number">123</span>; <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typeof</span> <span class="keyword">new</span> <span class="built_in">Boolean</span>(<span class="literal">true</span>); <span class="comment">// 'object'</span></span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Boolean</span>(<span class="literal">true</span>) === <span class="literal">true</span>; <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typeof</span> <span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">'str'</span>); <span class="comment">// 'object'</span></span><br><span class="line"><span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">'str'</span>) === <span class="string">'str'</span>; <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>另外如果我们在使用Number、Boolean和String时，没有写new会发生什么情况？<br>此时，Number()、Boolean和String()被当做普通函数，把任何类型的数据转换为number、boolean和string类型（注意不是其包装类型）：</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> n = <span class="built_in">Number</span>(<span class="string">'123'</span>); <span class="comment">// 123，相当于parseInt()或parseFloat()</span></span><br><span class="line"><span class="keyword">typeof</span> n; <span class="comment">// 'number'</span></span><br><span class="line"><span class="keyword">var</span> b = <span class="built_in">Boolean</span>(<span class="string">'true'</span>); <span class="comment">// true</span></span><br><span class="line"><span class="keyword">typeof</span> b; <span class="comment">// 'boolean'</span></span><br><span class="line"><span class="keyword">var</span> b2 = <span class="built_in">Boolean</span>(<span class="string">'false'</span>); <span class="comment">// true! 'false'字符串转换结果为true！因为它是非空字符串！</span></span><br><span class="line"><span class="keyword">var</span> b3 = <span class="built_in">Boolean</span>(<span class="string">''</span>); <span class="comment">// false</span></span><br><span class="line"><span class="keyword">var</span> s = <span class="built_in">String</span>(<span class="number">123.45</span>); <span class="comment">// '123.45'</span></span><br><span class="line"><span class="keyword">typeof</span> s; <span class="comment">// 'string'</span></span><br></pre></td></tr></table></figure>
+<p>需要遵守的规则</p>
+<ul>
+<li>不要使用new Number(), new Boolean(), new String()创建包装对象</li>
+<li>用parseInt()或parseFloat来转换任意类型到number</li>
+<li>用String()来转任意类型到string,或者直接调用某个对象的toString()方法 </li>
+<li>通常不必把任意类型转换为boolean再判断,因为可以直接写if(myVar){…}</li>
+<li>typeof可以判断出number, boolean,string,function和undefined</li>
+<li>判断array 要使用 Array.isArray(arr);</li>
+<li>判断null 请使用myVar===null</li>
+<li>判断某个全局变量是否存在 typeof window.myVar === ‘undefined’</li>
+<li>函数内部判断某个变量是否存在用 type myVar === ‘undefined’</li>
+</ul>
+<p><strong>特别注意null和undefined没有toString()方法. number对象调用toString()报错需要按一下方式处理</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">123.</span>toString(); <span class="comment">// SyntaxError</span></span><br><span class="line"><span class="number">123.</span>.toString(); <span class="comment">// '123', 注意是两个点！</span></span><br><span class="line">(<span class="number">123</span>).toString(); <span class="comment">// '123'</span></span><br></pre></td></tr></table></figure>
+<h2 id="Date"><a href="#Date" class="headerlink" title="Date"></a>Date</h2><blockquote>
+<p>Date对象用来表示时间和日期</p>
+</blockquote>
+<p>获取当前系统时间</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> now = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">now; <span class="comment">// Thu Feb 09 2017 15:00:16 GMT+0800 (CST)</span></span><br><span class="line">now.getFullYear(); <span class="comment">// 2017, 年份</span></span><br><span class="line">now.getMonth(); <span class="comment">// 1, 月份, 注意月份是0~11, 1 表示2月;</span></span><br><span class="line">now.getDate(); <span class="comment">// 9, 表示9号</span></span><br><span class="line">now.getDay(); <span class="comment">// 4, 表示星期四</span></span><br><span class="line">now.getHours(); <span class="comment">// 15点, 24小时制</span></span><br><span class="line">now.getMinutes(); <span class="comment">// 18分</span></span><br><span class="line">now.getSeconds(); <span class="comment">// 58秒</span></span><br><span class="line">now.getMilliseconds(); <span class="comment">// 625 毫秒</span></span><br><span class="line">now.getTime(); <span class="comment">// 1486624909839 时间戳</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//创建一个指定日期的对象</span></span><br><span class="line"><span class="comment">//第一种</span></span><br><span class="line"><span class="keyword">var</span> d1 = <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="number">2017</span>, <span class="number">3</span>, <span class="number">21</span>, <span class="number">08</span>, <span class="number">15</span>, <span class="number">30</span>, <span class="number">123</span>);</span><br><span class="line"><span class="built_in">console</span>.log(d1); <span class="comment">// Fri Apr 21 2017 08:15:30 GMT+0800 (CST)</span></span><br><span class="line"><span class="comment">//第二种</span></span><br><span class="line"><span class="keyword">var</span> d2 = <span class="built_in">Date</span>.parse(<span class="string">'2017-02-09T15:40:30.666+08:00'</span>)</span><br><span class="line"><span class="built_in">console</span>.log(d2); <span class="comment">// 1486626030666</span></span><br><span class="line"><span class="comment">//时间戳转换Date</span></span><br><span class="line"><span class="keyword">var</span> d3= <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="number">1486626030666</span>);</span><br><span class="line"><span class="built_in">console</span>.log(d3); <span class="comment">// Thu Feb 09 2017 15:40:30 GMT+0800 (CST)</span></span><br></pre></td></tr></table></figure>
+<p><strong>注意当前时间是浏览器从本机操作系统获取的时间,所以不一定准确,因为用户可自己随意设置</strong></p>
+<h3 id="时区"><a href="#时区" class="headerlink" title="时区"></a>时区</h3><blockquote>
+<p>Date对象表示的时间都是按浏览器所在的时区显示的,不过我们既可以显示本地时间,也可以显示调整后的时间</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> d = <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="number">1486626030666</span>);</span><br><span class="line">d.toLocaleString(); <span class="comment">// 2017/2/9 下午3:40:30, 显示格式与操作系统设置有关</span></span><br><span class="line">d.toUTCString(); <span class="comment">// Thu, 09 Feb 2017 07:40:30 GMT,与本地时间相差8个小时</span></span><br><span class="line"><span class="string">``</span><span class="string">` </span></span><br><span class="line"><span class="string">#### 关于时区转换</span></span><br><span class="line"><span class="string">只要我们通过时间戳,就无需担心时间转换</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>JavaScript</span><br><span class="line"><span class="keyword">if</span>(<span class="built_in">Date</span>.now)&#123;</span><br><span class="line">	alert(<span class="built_in">Date</span>.now()); <span class="comment">// 老版IE没有now()方法</span></span><br><span class="line">&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">	alert(<span class="keyword">new</span> <span class="built_in">Date</span>().getTime());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>本笔记根据 <a href="http://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000" target="_blank" rel="noopener">廖雪峰老师的JavaScript</a> 教程记录</p>
+</blockquote>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript基础笔记/" rel="tag"># JavaScript基础笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/03/JavaScript基础-闭包-箭头函数和生成器/" rel="next" title="JavaScript基础-闭包,箭头函数和生成器">
+                <i class="fa fa-chevron-left"></i> JavaScript基础-闭包,箭头函数和生成器
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/13/Gradle上传Jcenter记录/" rel="prev" title="Gradle上传Jcenter记录">
+                Gradle上传Jcenter记录 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/head.jpg"
+                alt="zhangxy" />
+            
+              <p class="site-author-name" itemprop="name">zhangxy</p>
+              <p class="site-description motion-element" itemprop="description">路漫漫其修远兮</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/zhangxuyang321" target="_blank" title="GitHub">GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="zhangxuyang321@gmail.com" target="_blank" title="E-Mail">E-Mail</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/u/5207372383/home" target="_blank" title="微博">微博</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#标准对象"><span class="nav-number">1.</span> <span class="nav-text">标准对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#包装对象"><span class="nav-number">2.</span> <span class="nav-text">包装对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Date"><span class="nav-number">3.</span> <span class="nav-text">Date</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#时区"><span class="nav-number">3.1.</span> <span class="nav-text">时区</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhangxy</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

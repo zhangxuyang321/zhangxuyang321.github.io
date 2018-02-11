@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.4" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.0.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="笔记,ReactNative," />
+
+
+<meta name="description" content="概述ReactNative作为时下流行的跨平台开发语言,其性能可以与原生媲美.但在开发过程种,因为程序编写不当,也会有很多&amp;quot;卡顿&amp;quot;发生,在学习了性能优化方面的知识后,现将具体的优化方法总结如下. ##主要优化方式  减少render  PureComponent &amp;amp; Component优化场景 在实际开发中,一般我们都会继承Component来实现各种各样的组件,并且也">
+<meta name="keywords" content="笔记,ReactNative">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React-Ntive性能优化笔记">
+<meta property="og:url" content="http://yoursite.com/2017/07/30/React-Ntive性能优化笔记/index.html">
+<meta property="og:site_name" content="zhangxy">
+<meta property="og:description" content="概述ReactNative作为时下流行的跨平台开发语言,其性能可以与原生媲美.但在开发过程种,因为程序编写不当,也会有很多&amp;quot;卡顿&amp;quot;发生,在学习了性能优化方面的知识后,现将具体的优化方法总结如下. ##主要优化方式  减少render  PureComponent &amp;amp; Component优化场景 在实际开发中,一般我们都会继承Component来实现各种各样的组件,并且也">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-07-30T07:40:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="React-Ntive性能优化笔记">
+<meta name="twitter:description" content="概述ReactNative作为时下流行的跨平台开发语言,其性能可以与原生媲美.但在开发过程种,因为程序编写不当,也会有很多&amp;quot;卡顿&amp;quot;发生,在学习了性能优化方面的知识后,现将具体的优化方法总结如下. ##主要优化方式  减少render  PureComponent &amp;amp; Component优化场景 在实际开发中,一般我们都会继承Component来实现各种各样的组件,并且也">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/30/React-Ntive性能优化笔记/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>React-Ntive性能优化笔记 | zhangxy</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?8087e85c4aa64b0bf3ad5b4a9ed23038";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">zhangxy</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/30/React-Ntive性能优化笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhangxy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhangxy">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">React-Ntive性能优化笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-30T11:38:56+08:00">2017-07-30</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/ReactNative/" itemprop="url" rel="index"><span itemprop="name">ReactNative</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><pre><code>ReactNative作为时下流行的跨平台开发语言,其性能可以与原生媲美.但在开发过程种,因为程序编写不当,也会有很多&quot;卡顿&quot;发生,在学习了性能优化方面的知识后,现将具体的优化方法总结如下.
+</code></pre><p>##主要优化方式</p>
+<blockquote>
+<p>减少render</p>
+</blockquote>
+<h2 id="PureComponent-amp-Component"><a href="#PureComponent-amp-Component" class="headerlink" title="PureComponent &amp; Component"></a>PureComponent &amp; Component</h2><h3 id="优化场景"><a href="#优化场景" class="headerlink" title="优化场景"></a>优化场景</h3><blockquote>
+<p>在实际开发中,一般我们都会继承Component来实现各种各样的组件,并且也经常会出现组件之间的嵌套,即父子组件.在这样的情况下,如果父组件的State发生改变,那么父组件render将会被重新执行.如果子组件此时也是继承的Component,那么子组件的render方法也将会被重新执行,但是子组件的State并没有发生改变,这样无疑浪费了很多性能.</p>
+</blockquote>
+<a id="more"></a>
+<p>代码示例1:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SonComponent</span> <span class="keyword">extends</span> <span class="title">Component</span></span>&#123;</span><br><span class="line">		render()&#123;</span><br><span class="line">			<span class="keyword">const</span> &#123;title,callback&#125; = <span class="keyword">this</span>.props;</span><br><span class="line">			<span class="keyword">return</span>(</span><br><span class="line">				&lt;Button title=&#123;title&#125; onPress=&#123;callback&#125;/&gt;</span><br><span class="line">			)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FatherComponent</span> <span class="keyword">extends</span> <span class="title">Component</span></span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.state=&#123;</span><br><span class="line">		text: <span class="string">'呵呵'</span></span><br><span class="line">	&#125;</span><br><span class="line">	render()&#123;</span><br><span class="line">		<span class="keyword">return</span>(</span><br><span class="line">			&lt;View&gt;</span><br><span class="line">				&lt;Text&gt;&#123;<span class="keyword">this</span>.state.text&#125;&lt;<span class="regexp">/Text&gt;</span></span><br><span class="line"><span class="regexp">				&lt;SonComponent title="点击改变文字"  </span></span><br><span class="line"><span class="regexp">				onPress=&#123;()=&gt;&#123;this.setState(&#123;text:"哈哈"&#125;)&#125;&#125;/</span>&gt;</span><br><span class="line">			&lt;<span class="regexp">/View&gt;</span></span><br><span class="line"><span class="regexp">		)</span></span><br><span class="line"><span class="regexp">	&#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="优化方式"><a href="#优化方式" class="headerlink" title="优化方式"></a>优化方式</h3><p>将子组件继承PureComponent</p>
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><blockquote>
+<p>PureComponent能具备上述功能,是因为其自身在shouldComponentUpdate(object nextProps, object nextState)生命周期方法中做了属性和状态的比较.shouldComponentUpdate方法在返回true时,才会进行componentWillUpdate(),render(),componentDidUpdate()方法更新组件</p>
+</blockquote>
+<h2 id="函数方法优化"><a href="#函数方法优化" class="headerlink" title="函数方法优化"></a>函数方法优化</h2><h3 id="优化场景-1"><a href="#优化场景-1" class="headerlink" title="优化场景"></a>优化场景</h3><p>在代码示例1中,子组件还是会重新render的.因为在父组件的<soncomponent>中onPress写了一个匿名的箭头函数.这样父组件在每次render的时候,都会重新创建一个onPress方法.这样在子组件的shouldComponentUpdate仍然会返回true,导致子组件重新render</soncomponent></p>
+<h3 id="优化方式-1"><a href="#优化方式-1" class="headerlink" title="优化方式"></a>优化方式</h3><p>将onPress中的方法提取出来</p>
+<p>代码示例2:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FatherComponent</span> <span class="keyword">extends</span> <span class="title">Component</span></span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.state=&#123;</span><br><span class="line">		text: <span class="string">'呵呵'</span></span><br><span class="line">	&#125;</span><br><span class="line">	render()&#123;</span><br><span class="line">		<span class="keyword">return</span>(</span><br><span class="line">			&lt;View&gt;</span><br><span class="line">				&lt;Text&gt;&#123;<span class="keyword">this</span>.state.text&#125;&lt;<span class="regexp">/Text&gt;</span></span><br><span class="line"><span class="regexp">				&lt;SonComponent title="点击改变文字"  </span></span><br><span class="line"><span class="regexp">				onPress=&#123;this.fatherCallback&#125;/</span>&gt;</span><br><span class="line">			&lt;<span class="regexp">/View&gt;</span></span><br><span class="line"><span class="regexp">		)</span></span><br><span class="line"><span class="regexp">	&#125;</span></span><br><span class="line"><span class="regexp">	fatherCallback = ()=&gt;&#123;</span></span><br><span class="line"><span class="regexp">		this.setState(&#123;text:"哈哈"&#125;)</span></span><br><span class="line"><span class="regexp">	&#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h3><p>{()=&gt;{}} === {()=&gt;{}} 为false,所以上述代码示例1中的写法,子组件将会被重新render. 而在成员上使用箭头函数,只要FatherComponent不会被重新创建则,函数的引用也是唯一的</p>
+<h2 id="合理的拆分组件"><a href="#合理的拆分组件" class="headerlink" title="合理的拆分组件"></a>合理的拆分组件</h2><h3 id="优化场景-2"><a href="#优化场景-2" class="headerlink" title="优化场景"></a>优化场景</h3><p>ReactNative是推崇组件化思想的,将具有单独功能的需求封装成一个组件,结合PureComponent优化,就可以再次达到优化的目的</p>
+<h2 id="组件属性改变的优化"><a href="#组件属性改变的优化" class="headerlink" title="组件属性改变的优化"></a>组件属性改变的优化</h2><h3 id="优化场景-3"><a href="#优化场景-3" class="headerlink" title="优化场景"></a>优化场景</h3><p>假设此时我们需要写一个类似ViewPager的组件,在page变化的时候滚动到相应位置,但是ViewPgaer中的子组件并没有任何修改.此时只是因为Page变化而需要重新render则就得不偿失了.</p>
+<h3 id="优化方式-2"><a href="#优化方式-2" class="headerlink" title="优化方式"></a>优化方式</h3><p>结合shouldComponentUpdate生命周期方法来进行判断,如果只是page发生变化则return false</p>
+<h3 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ViewPager</span> <span class="keyword">extends</span> <span class="title">PureComponent</span></span>&#123;</span><br><span class="line">	componentWillReceiveProps(newProps)&#123;</span><br><span class="line">		<span class="keyword">if</span>(newProps.page !== <span class="keyword">this</span>.props.page)&#123;</span><br><span class="line">			<span class="keyword">this</span>.refs.scroll.scrollTo(</span><br><span class="line">				x:newProps.page * PAGE_SIZE</span><br><span class="line">			);</span><br><span class="line">		&#125;	</span><br><span class="line">	&#125;</span><br><span class="line">	shouldComponentUpdate(newProps,newState)&#123;</span><br><span class="line">		<span class="keyword">if</span>(swallowArrayCompare(<span class="keyword">this</span>.props.children,newProps.children))&#123;</span><br><span class="line">			<span class="keyword">return</span> ture;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">	&#125;</span><br><span class="line">	render()&#123;</span><br><span class="line">		renturn(</span><br><span class="line">			&lt;ScrollView ref=<span class="string">'scroll'</span>&gt;</span><br><span class="line">				&#123;<span class="keyword">this</span>.props.childern&#125;</span><br><span class="line">			&lt;<span class="regexp">/ScrollView&gt;</span></span><br><span class="line"><span class="regexp">		)</span></span><br><span class="line"><span class="regexp">	&#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="导航动画方面的优化"><a href="#导航动画方面的优化" class="headerlink" title="导航动画方面的优化"></a>导航动画方面的优化</h2><h3 id="优化场景-4"><a href="#优化场景-4" class="headerlink" title="优化场景"></a>优化场景</h3><p>在实际开发中,在执行动画的时候,也有较大数据的请求与处理,例如导航动画.此时,页面会有明显的卡顿.</p>
+<h3 id="优化方式-3"><a href="#优化方式-3" class="headerlink" title="优化方式"></a>优化方式</h3><h4 id="InteractionManager-runAfterInteractions-gt-耗时操作"><a href="#InteractionManager-runAfterInteractions-gt-耗时操作" class="headerlink" title="InteractionManager.runAfterInteractions(()=&gt;{耗时操作})"></a>InteractionManager.runAfterInteractions(()=&gt;{耗时操作})</h4><p>优点:<br>    此方法在动画执行和用户触摸时不会执行,这样讲动画的执行和业务逻辑分开<br>缺点:<br>    整体业务处理时间变长</p>
+<h4 id="数据分开渲染"><a href="#数据分开渲染" class="headerlink" title="数据分开渲染"></a>数据分开渲染</h4><ul>
+<li>不要同时渲染过多数据,在ListView中,常存在的数据放在renderHeader中,并且通过pageSize来分开渲染数据,dataSouce中的数据通过InteractionManager.runAfterInteractions来加载</li>
+<li>如果不是List这种结构数据,而是许多不同的组件渲染,则需要使用Incremental.在代码示例3中,IncrementalPresenter中的Incremental会依次渲染,不会同时渲染过多组件</li>
+</ul>
+<p>代码示例3</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">render()&#123;</span><br><span class="line"><span class="keyword">return</span>(</span><br><span class="line">	&lt;ScrollView&gt;</span><br><span class="line">		&#123;<span class="built_in">Array</span>(<span class="number">10</span>).fill().map(<span class="function">(<span class="params">rowIdx</span>)=&gt;</span>&#123;</span><br><span class="line">			&lt;IncrementalPresenter key=&#123;rowIdx&#125;&gt;</span><br><span class="line">				&lt;Row&gt;</span><br><span class="line">					&#123;<span class="built_in">Array</span>(<span class="number">20</span>).fill().map(<span class="function">(<span class="params">weightIdx</span>)=&gt;</span>&#123;</span><br><span class="line">						&lt;Incremental key=&#123;weightIdx&#125;&gt;</span><br><span class="line">							&lt;SlowWeight/&gt;</span><br><span class="line">						&lt;<span class="regexp">/Incremental&gt;</span></span><br><span class="line"><span class="regexp">					 &#125;)&#125;		</span></span><br><span class="line"><span class="regexp">				 &lt;/</span>Row&gt;</span><br><span class="line">			   &lt;<span class="regexp">/IncrementalPresenter&gt;</span></span><br><span class="line"><span class="regexp">			&#125;)&#125;</span></span><br><span class="line"><span class="regexp">	&lt;/</span>ScrollView&gt;</span><br><span class="line">	)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/笔记/" rel="tag"># 笔记</a>
+          
+            <a href="/tags/ReactNative/" rel="tag"># ReactNative</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/20/算法总结/" rel="next" title="算法总结">
+                <i class="fa fa-chevron-left"></i> 算法总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/17/EventBus源码解析/" rel="prev" title="EventBus源码解析">
+                EventBus源码解析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/head.jpg"
+                alt="zhangxy" />
+            
+              <p class="site-author-name" itemprop="name">zhangxy</p>
+              <p class="site-description motion-element" itemprop="description">路漫漫其修远兮</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/zhangxuyang321" target="_blank" title="GitHub">GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="zhangxuyang321@gmail.com" target="_blank" title="E-Mail">E-Mail</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/u/5207372383/home" target="_blank" title="微博">微博</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PureComponent-amp-Component"><span class="nav-number">2.</span> <span class="nav-text">PureComponent &amp; Component</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#优化场景"><span class="nav-number">2.1.</span> <span class="nav-text">优化场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优化方式"><span class="nav-number">2.2.</span> <span class="nav-text">优化方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原理"><span class="nav-number">2.3.</span> <span class="nav-text">原理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数方法优化"><span class="nav-number">3.</span> <span class="nav-text">函数方法优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#优化场景-1"><span class="nav-number">3.1.</span> <span class="nav-text">优化场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优化方式-1"><span class="nav-number">3.2.</span> <span class="nav-text">优化方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原理-1"><span class="nav-number">3.3.</span> <span class="nav-text">原理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#合理的拆分组件"><span class="nav-number">4.</span> <span class="nav-text">合理的拆分组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#优化场景-2"><span class="nav-number">4.1.</span> <span class="nav-text">优化场景</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组件属性改变的优化"><span class="nav-number">5.</span> <span class="nav-text">组件属性改变的优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#优化场景-3"><span class="nav-number">5.1.</span> <span class="nav-text">优化场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优化方式-2"><span class="nav-number">5.2.</span> <span class="nav-text">优化方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码示例"><span class="nav-number">5.3.</span> <span class="nav-text">代码示例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导航动画方面的优化"><span class="nav-number">6.</span> <span class="nav-text">导航动画方面的优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#优化场景-4"><span class="nav-number">6.1.</span> <span class="nav-text">优化场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优化方式-3"><span class="nav-number">6.2.</span> <span class="nav-text">优化方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#InteractionManager-runAfterInteractions-gt-耗时操作"><span class="nav-number">6.2.1.</span> <span class="nav-text">InteractionManager.runAfterInteractions(()=&gt;{耗时操作})</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据分开渲染"><span class="nav-number">6.2.2.</span> <span class="nav-text">数据分开渲染</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhangxy</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

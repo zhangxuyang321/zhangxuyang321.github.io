@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.4" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.0.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="笔记,命令行," />
+
+
+<meta name="description" content="#命令行笔记 git">
+<meta name="keywords" content="笔记,命令行">
+<meta property="og:type" content="article">
+<meta property="og:title" content="命令行">
+<meta property="og:url" content="http://yoursite.com/2017/05/22/命令行/index.html">
+<meta property="og:site_name" content="zhangxy">
+<meta property="og:description" content="#命令行笔记 git">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://okskqdic8.bkt.clouddn.com/git_demo1.png">
+<meta property="og:image" content="http://okskqdic8.bkt.clouddn.com/git_demo2.png">
+<meta property="og:image" content="http://okskqdic8.bkt.clouddn.com/git_demo3.png">
+<meta property="og:updated_time" content="2017-08-14T03:25:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="命令行">
+<meta name="twitter:description" content="#命令行笔记 git">
+<meta name="twitter:image" content="http://okskqdic8.bkt.clouddn.com/git_demo1.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/05/22/命令行/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>命令行 | zhangxy</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?8087e85c4aa64b0bf3ad5b4a9ed23038";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">zhangxy</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/22/命令行/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhangxy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhangxy">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">命令行</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-22T17:00:07+08:00">2017-05-22</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/笔记/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>#命令行笔记</p>
+<h2 id="git"><a href="#git" class="headerlink" title="git"></a>git</h2><a id="more"></a>
+<h3 id="初始化git项目"><a href="#初始化git项目" class="headerlink" title="初始化git项目"></a>初始化git项目</h3><pre><code>git init // 初始化项目
+
+git add file路径  //添加某一个文件
+
+git add . //添加所有文件
+
+git commit -m &quot;提交描述&quot;  //提交到本地仓库
+
+git remote add origin https://git.oschina.net/xyz321/xx.git&apos; //关联远程仓库
+
+git push origin master   //推送到远程仓库
+
+//更换远程分支
+
+git remote rm origin    //删除现有远程关联分支
+
+  git remote add origin [url] //重新关联远程仓库
+</code></pre><h3 id="分支"><a href="#分支" class="headerlink" title="分支"></a>分支</h3><pre><code>git branch //查看存在的分支
+
+git checkout -b 分支名  //创建分支
+
+git checkout 分支名  //切换到某一个分支
+</code></pre><h3 id="修改记录"><a href="#修改记录" class="headerlink" title="修改记录"></a>修改记录</h3><pre><code> git commit --amend 修改最后一次提交的记录
+
+git rebase -i &lt;指定提交号,HEAD~1,HEAD~2,HEAD~3&gt; 修改本次提交,上        次提交,上上次提交
+
+git filter-branch --&lt;各种filer&gt; &apos;命令&apos; &lt;修改范围&gt;  批量修改
+</code></pre><ul>
+<li><p>切换到远程新建的分支</p>
+<p>  git fetch origin    将远程主机的更新,全部取回到本地</p>
+<pre><code>git branch -a    查看所有分支
+</code></pre><p>  git checkout -b 分支名 远程仓库/分支名</p>
+<p>  示例:</p>
+<pre><code>一开始只有主分支(master),然后远程新建分支(DMS)后,本地如何获取并切换分支
+
+git branch -a     //先查看当前分支
+</code></pre><p>  <img src="http://okskqdic8.bkt.clouddn.com/git_demo1.png"></p>
+<pre><code>git fetch origin    //将远程主机更新,全部取回本地
+
+git branch -a    //再次查看分支
+</code></pre><p>  <img src="http://okskqdic8.bkt.clouddn.com/git_demo2.png"></p>
+<pre><code>git checkout -b DMS origin/DMS    //切换到DMS分支,并在本地新建DMS分支
+
+git branch -a    //再次查看分支,以后就可以直接通过git checkout 分支名来切换分支了
+</code></pre><p>  <img src="http://okskqdic8.bkt.clouddn.com/git_demo3.png"></p>
+</li>
+</ul>
+<h3 id="git版本回退"><a href="#git版本回退" class="headerlink" title="git版本回退"></a>git版本回退</h3><pre><code>git reset --hard &lt;commit 版本号&gt;
+
+//如果远程也要回退
+git push -f   //覆盖远程    
+</code></pre><h2 id="Android"><a href="#Android" class="headerlink" title="Android"></a>Android</h2><h3 id="adb"><a href="#adb" class="headerlink" title="adb"></a>adb</h3><h2 id="hexo"><a href="#hexo" class="headerlink" title="hexo"></a>hexo</h2><h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><ul>
+<li>启动本地测试服务  hexo s</li>
+<li>停止本地测试服务 control + c</li>
+<li>清楚缓存 hexo clean </li>
+<li>生成 hexo g</li>
+<li>部署,上传github hexo d</li>
+</ul>
+<h2 id="Mac"><a href="#Mac" class="headerlink" title="Mac"></a>Mac</h2><h3 id="音频"><a href="#音频" class="headerlink" title="音频"></a>音频</h3><ul>
+<li><p>将音频文件转换成iPhone铃声的格式</p>
+<p>  afconvert input.mp3 ringtone.m4r -f m4af</p>
+</li>
+<li><p>wav 转换 caf</p>
+<p>  /usr/bin/afconvert -f caff -d LEI16 “bullet_fire_02_30.wav”</p>
+</li>
+</ul>
+<h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><h3 id="查看日志命令"><a href="#查看日志命令" class="headerlink" title="查看日志命令"></a>查看日志命令</h3><ul>
+<li><p>实时查看</p>
+<p>  tail -f catalina.out</p>
+</li>
+<li><p>筛选日志</p>
+<p>  cat catalina.out | grep -A20 -B20 ‘HP201705220509342202’</p>
+<p>  cat ‘筛选的文件’ | grep -A’向后多少行’ -B’向前多少行’  ‘筛选条件’</p>
+</li>
+<li><p>移除文件 rm</p>
+</li>
+<li>上传文件 rz</li>
+<li>更换文件名 mv 源文件名 修改后名称</li>
+<li><p>查找进程</p>
+<p>   ps -ef | grep ‘tomcat8080’  //查找tomcat8080的进程</p>
+</li>
+<li>杀进程<br>  kill -9 进程pid</li>
+</ul>
+<h2 id="ReactNative相关"><a href="#ReactNative相关" class="headerlink" title="ReactNative相关"></a>ReactNative相关</h2><h3 id="常用命令-1"><a href="#常用命令-1" class="headerlink" title="常用命令"></a>常用命令</h3><ul>
+<li><p>查看当前ReactNative版本 </p>
+<p>  react-native –version </p>
+</li>
+<li><p>更新全局的ReactNative到最新版本 </p>
+<p>  sudo npm update -g react-native-cli</p>
+</li>
+<li><p>将某一项目升级到最新ReactnNative版本 </p>
+<p>  react-native-git-upgrade</p>
+</li>
+</ul>
+<h3 id="node-js-相关"><a href="#node-js-相关" class="headerlink" title="node.js 相关"></a>node.js 相关</h3><ul>
+<li>查看当前版本 node -v</li>
+<li><p>node.js 升级</p>
+<p>  sudo npm cache clean -f 清除node.js的cache</p>
+<p>  sudo npm install -g n 安装 n 工具，这个工具是专门用来管理node.js版本</p>
+<p>sudo n stable        ===&gt;     安装最新稳定版本</p>
+<p>sudo n latest        ===&gt;     安装最新版本</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/笔记/" rel="tag"># 笔记</a>
+          
+            <a href="/tags/命令行/" rel="tag"># 命令行</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/05/JavaScrip浏览器对象/" rel="next" title="JavaScrip浏览器对象">
+                <i class="fa fa-chevron-left"></i> JavaScrip浏览器对象
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/20/算法总结/" rel="prev" title="算法总结">
+                算法总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/head.jpg"
+                alt="zhangxy" />
+            
+              <p class="site-author-name" itemprop="name">zhangxy</p>
+              <p class="site-description motion-element" itemprop="description">路漫漫其修远兮</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/zhangxuyang321" target="_blank" title="GitHub">GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="zhangxuyang321@gmail.com" target="_blank" title="E-Mail">E-Mail</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/u/5207372383/home" target="_blank" title="微博">微博</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#git"><span class="nav-number">1.</span> <span class="nav-text">git</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化git项目"><span class="nav-number">1.1.</span> <span class="nav-text">初始化git项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分支"><span class="nav-number">1.2.</span> <span class="nav-text">分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改记录"><span class="nav-number">1.3.</span> <span class="nav-text">修改记录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git版本回退"><span class="nav-number">1.4.</span> <span class="nav-text">git版本回退</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android"><span class="nav-number">2.</span> <span class="nav-text">Android</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#adb"><span class="nav-number">2.1.</span> <span class="nav-text">adb</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hexo"><span class="nav-number">3.</span> <span class="nav-text">hexo</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#常用命令"><span class="nav-number">3.1.</span> <span class="nav-text">常用命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mac"><span class="nav-number">4.</span> <span class="nav-text">Mac</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#音频"><span class="nav-number">4.1.</span> <span class="nav-text">音频</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux"><span class="nav-number">5.</span> <span class="nav-text">Linux</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看日志命令"><span class="nav-number">5.1.</span> <span class="nav-text">查看日志命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ReactNative相关"><span class="nav-number">6.</span> <span class="nav-text">ReactNative相关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#常用命令-1"><span class="nav-number">6.1.</span> <span class="nav-text">常用命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#node-js-相关"><span class="nav-number">6.2.</span> <span class="nav-text">node.js 相关</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhangxy</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
