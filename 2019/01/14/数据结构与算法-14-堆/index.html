@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.4" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="笔记,算法," />
+
+
+<meta name="description" content="介绍“堆”(Heap) 是一种特殊的树,它的应用场景非常多,最经典的莫过于堆排序.堆排序是一种原地的,时间复杂度为O(nlogn)的排序算法. 如何理解”堆”什么样的树才是堆?需要满足两点要求:  堆是一个完全二叉树 堆中的每一个节点的值都必须大于等于(或小于等于)其子树中每个节点的值  对于每个节点的值都大于等于子树中每个节点的值的堆,我们叫做”大顶堆”;对于每个节点的值都小于等于子树中每个节点">
+<meta name="keywords" content="笔记,算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构与算法(14)_堆">
+<meta property="og:url" content="http://yoursite.com/2019/01/14/数据结构与算法-14-堆/index.html">
+<meta property="og:site_name" content="zhangxy">
+<meta property="og:description" content="介绍“堆”(Heap) 是一种特殊的树,它的应用场景非常多,最经典的莫过于堆排序.堆排序是一种原地的,时间复杂度为O(nlogn)的排序算法. 如何理解”堆”什么样的树才是堆?需要满足两点要求:  堆是一个完全二叉树 堆中的每一个节点的值都必须大于等于(或小于等于)其子树中每个节点的值  对于每个节点的值都大于等于子树中每个节点的值的堆,我们叫做”大顶堆”;对于每个节点的值都小于等于子树中每个节点">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-01-17T09:03:30.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据结构与算法(14)_堆">
+<meta name="twitter:description" content="介绍“堆”(Heap) 是一种特殊的树,它的应用场景非常多,最经典的莫过于堆排序.堆排序是一种原地的,时间复杂度为O(nlogn)的排序算法. 如何理解”堆”什么样的树才是堆?需要满足两点要求:  堆是一个完全二叉树 堆中的每一个节点的值都必须大于等于(或小于等于)其子树中每个节点的值  对于每个节点的值都大于等于子树中每个节点的值的堆,我们叫做”大顶堆”;对于每个节点的值都小于等于子树中每个节点">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/01/14/数据结构与算法-14-堆/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>数据结构与算法(14)_堆 | zhangxy</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?8087e85c4aa64b0bf3ad5b4a9ed23038";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">zhangxy</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/14/数据结构与算法-14-堆/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhangxy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhangxy">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">数据结构与算法(14)_堆</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-14T14:55:06+08:00">2019-01-14</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>“堆”(Heap) 是一种特殊的树,它的应用场景非常多,最经典的莫过于堆排序.堆排序是一种原地的,时间复杂度为O(nlogn)的排序算法.</p>
+<h2 id="如何理解”堆”"><a href="#如何理解”堆”" class="headerlink" title="如何理解”堆”"></a>如何理解”堆”</h2><p>什么样的树才是堆?需要满足两点要求:</p>
+<ul>
+<li>堆是一个完全二叉树</li>
+<li>堆中的每一个节点的值都必须大于等于(或小于等于)其子树中每个节点的值</li>
+</ul>
+<p>对于每个节点的值都大于等于子树中每个节点的值的堆,我们叫做”大顶堆”;对于每个节点的值都小于等于子树中每个节点的值的堆,我们叫做”小顶堆”.</p>
+<p>//TODO 图25</p>
+<p>其中1,2是”大顶堆”,3是”小顶堆”,4不是堆.对于同一种数据,我们可以构建不同的堆形态.</p>
+<h2 id="如何实现一个堆"><a href="#如何实现一个堆" class="headerlink" title="如何实现一个堆"></a>如何实现一个堆</h2><p>完全二叉树比较适合用数组来存储,如图一个用数组存储堆的例子:</p>
+<p>//TODO 图26</p>
+<p>从图中可以看到,数组中下标为i的节点的左子节点,就是下标为i <em> 2的节点,又子节点就是下标为i </em> 2 + 1的节点,父节点就是下标为i/2的节点.</p>
+<h3 id="往堆中插入一个元素"><a href="#往堆中插入一个元素" class="headerlink" title="往堆中插入一个元素"></a>往堆中插入一个元素</h3><p>往堆中插入一个元素后,我们需要满足堆的两个要求.</p>
+<p>如果我们把新插入的元素放到堆的最后,如图,已经不符合堆的特性了,于是我们需要进行调整,让其重新满足特性这个过程就叫<font color="red">堆化</font>.</p>
+<p>//TODO 图27</p>
+<p>堆化有两种方式,从下往上和从上往下.</p>
+<h4 id="堆化-从下往上"><a href="#堆化-从下往上" class="headerlink" title="堆化_从下往上"></a>堆化_从下往上</h4><p>堆化非常简单就是顺着节点所在的路径向上或者向下,对比,然后交换.</p>
+<p>我们可以让新插入的节点与父节点比较大小.如果不满足子节点小于等于父节点的要求,我们就互换两个节点.一直重复这个过程,直到父子节点之间的关系满足.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Heap</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span>[] a; <span class="comment">//数组a,从下标1开始存储数据</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> n;   <span class="comment">//堆可以存储的最大数据</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> count; <span class="comment">//堆中已经存在的数据个数</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Heap</span><span class="params">(<span class="keyword">int</span> capacity)</span></span>&#123;</span><br><span class="line">		a = <span class="keyword">new</span> <span class="keyword">int</span>[capacity + <span class="number">1</span>];</span><br><span class="line">		n = capacity;</span><br><span class="line">		count = <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">(<span class="keyword">int</span> data)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(count &gt;= n) <span class="keyword">return</span>;</span><br><span class="line">		++count;</span><br><span class="line">		a[count] = data;</span><br><span class="line">		<span class="keyword">int</span> i = count;</span><br><span class="line">		<span class="keyword">while</span>(i/<span class="number">2</span> &gt; <span class="number">0</span> &amp;&amp; a[i] &gt; a[i/<span class="number">2</span>])&#123;</span><br><span class="line">			swap(a, i, i/<span class="number">2</span>); <span class="comment">//用于交换下标为 i 和 i/2 的两个元素</span></span><br><span class="line">			i = i/<span class="number">2</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="删除对顶元素"><a href="#删除对顶元素" class="headerlink" title="删除对顶元素"></a>删除对顶元素</h2><p>从堆的第二条定义中,任何节点的值都大于等于(或小于等于)子树节点的值,我们可以发现堆顶元素存储的就是最大值或最小值.</p>
+<p>假设我们构造的是大顶堆,堆顶元素就是最大元素,当我们删除堆顶元素后,就需要把第二大元素放在堆顶,那第二大元素肯定会出现在左右子节点中.然后我们再迭代的删除第二大节点,以此类推直到叶子节点被删除.不过这种方法有点问题,就是最后堆化出来的堆并不满足完全二叉树的特性.</p>
+<p>实际上,我们需要改变一下思路,来解决这个问题.我们把最后一个节点放在堆顶,然后利用同样的父子节点对比方法.对于不满足父子节点大小关系的,互换两个节点,并且重复执行这个过程,直到父子节点满足大小关系为止.这就是<font color="red">从上往下的堆化方法</font>.</p>
+<p>//TODO 图28</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">removeMax</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(count == <span class="number">0</span>) <span class="keyword">return</span>;</span><br><span class="line">	a[<span class="number">1</span>] = a[count];</span><br><span class="line">	--count;</span><br><span class="line">	heapify(a, count, <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">heapify</span><span class="params">(<span class="keyword">int</span>[] a, <span class="keyword">int</span> n, <span class="keyword">int</span> i)</span></span>&#123;</span><br><span class="line">	<span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">		<span class="keyword">int</span> maxPos = i;</span><br><span class="line">		<span class="keyword">if</span>(i*<span class="number">2</span> &lt;= n &amp;&amp; a[i] &lt; a[i*<span class="number">2</span>]) maxPos = i * <span class="number">2</span>;</span><br><span class="line">		<span class="keyword">if</span>(i*<span class="number">2</span>+<span class="number">1</span> &lt;=n &amp;&amp; a[maxPos] &lt; a[i*<span class="number">2</span>+<span class="number">1</span>]) maxPos = i*<span class="number">2</span> +<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">if</span>(maxPos == i) <span class="keyword">break</span>;</span><br><span class="line">		swap(a, i, maxPos);</span><br><span class="line">		i = maxPos;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们知道,一个包含n个节点的安全二叉树,树的高度不会超过$$log_2n$$.堆化的过程是顺着节点所在的路径来比较交换的,所以堆化的时间复杂度跟树的高度成正比,也就是O(logn).插入数据和删除堆顶数据主要逻辑就是堆化,所以往堆中插入一个数据和删除堆顶数据的时间复杂度都是O(logn).</p>
+<h2 id="如何基于堆实现排序"><a href="#如何基于堆实现排序" class="headerlink" title="如何基于堆实现排序"></a>如何基于堆实现排序</h2><p>我们可以把堆排序的过程大致拆分成两个步骤,<font color="red">建堆</font>和<font color="red">排序</font>.</p>
+<h3 id="建堆"><a href="#建堆" class="headerlink" title="建堆"></a>建堆</h3><p>我们首先将数组原地建成一个堆.建堆过程有两种思路.</p>
+<p>第一种就是借助插入元素的思路.尽管数组中包含n个数据但是我们可以假设,起初堆中只包含一个数据,就是下标为1的数据,然后我们调用插入操作,将下标从2到n的数据依次插入到堆中.</p>
+<p>第二种跟第一种截然相反.第一种建堆思路的处理过程是从前往后处理数组数据,并且每个数据插入堆中时,都是从下往上堆化.而第二种是从后往前处理数组,并且每个数据都是从上往下堆化.</p>
+<p>//TODO 图29,30</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">buildHeap</span><span class="params">(<span class="keyword">int</span>[] a, <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = n/<span class="number">2</span>; i &gt;= <span class="number">1</span>; --i;)&#123;</span><br><span class="line">		heapify(a, n, i);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">heapify</span><span class="params">(<span class="keyword">int</span>[] a, <span class="keyword">int</span> n, <span class="keyword">int</span> i)</span></span>&#123;</span><br><span class="line">	<span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">		<span class="keyword">int</span> maxPos = i;</span><br><span class="line">		<span class="keyword">if</span>(i*<span class="number">2</span> &lt;= n &amp;&amp; a[i] &lt; a[i*<span class="number">2</span>]) maxPos = i*<span class="number">2</span>;</span><br><span class="line">		<span class="keyword">if</span>(i*<span class="number">2</span>+<span class="number">1</span> &lt;= n &amp;&amp; a[maxPos] &lt; a[i*<span class="number">2</span>+<span class="number">1</span>]) maxPos = i*<span class="number">2</span>+<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">if</span>(maxPos == i) <span class="keyword">break</span>;</span><br><span class="line">		swap(a, i, maxPos);</span><br><span class="line">		i = maxPos;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码中,我们队下标从n/2开始到1的数据进行堆化,下标是 n/2+1 到 n 的节点是叶子节点我们不需要堆化,实际上对于完全二叉树来说,下标从 n/2+1 到 n 的节点都是叶子节点</p>
+<p>建堆的时间复杂度是O(n);</p>
+<h3 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h3><p>建堆完成后,数组中的数据已经是按照大顶堆的特性来组织的.数组的第一个元素就是堆顶,也是最大元素.我们把它跟最后一个数组交换,那最大元素就放到了下标为n的位置.</p>
+<p>这个过程有点类似”删除堆顶的操作”,当堆顶元素移除之后,我们把原先下标为n的元素放到堆顶,然后再通过堆化方法,将剩下n-1个数据重新构成堆.重复此过程,直到最后堆中只剩下下标为1的一个元素,排序就完成了.</p>
+<p>//todo 图31</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//n表示数据的个数,数组a 中的数据从下标1到n的位置</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sort</span><span class="params">(<span class="keyword">int</span>[] a, <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	buildHeap(a,n);</span><br><span class="line">	<span class="keyword">int</span> k = n;</span><br><span class="line">	<span class="keyword">while</span>(k &gt; <span class="number">1</span>)&#123;</span><br><span class="line">		swap(a,<span class="number">1</span>,k);</span><br><span class="line">		--k;</span><br><span class="line">		heapify(a,k,i);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>整个排序过程中,都只需要极个别的临时存储空间,所以堆排序是原地排序算法.堆排序包括建堆和排序两个操作,建堆过程的时间复杂度是O(n),排序过程的时间复杂的度是O(nlogn),所以堆排序整体的时间复杂度是O(nlogn).</p>
+<p>堆排序不是稳定的排序算法,因为在排序的过程中,存在将堆的最后一个节点跟堆顶节点互换的操作.</p>
+<h2 id="实际开发中为什么快速排序比堆排序性能好"><a href="#实际开发中为什么快速排序比堆排序性能好" class="headerlink" title="实际开发中为什么快速排序比堆排序性能好"></a>实际开发中为什么快速排序比堆排序性能好</h2><h3 id="堆排序数据访问的方式没有快速排序友好"><a href="#堆排序数据访问的方式没有快速排序友好" class="headerlink" title="堆排序数据访问的方式没有快速排序友好."></a>堆排序数据访问的方式没有快速排序友好.</h3><p>对于快速排序来说,数据是顺序访问的而对于堆排序来说,数据是跳着访问的.</p>
+<h3 id="对于同样的数据-堆排序算法的交换次数要多余快速排序"><a href="#对于同样的数据-堆排序算法的交换次数要多余快速排序" class="headerlink" title="对于同样的数据,堆排序算法的交换次数要多余快速排序"></a>对于同样的数据,堆排序算法的交换次数要多余快速排序</h3><h2 id="堆的应用"><a href="#堆的应用" class="headerlink" title="堆的应用"></a>堆的应用</h2><h3 id="应用一-优先级队列"><a href="#应用一-优先级队列" class="headerlink" title="应用一: 优先级队列"></a>应用一: 优先级队列</h3><p>优先级队列.首先,它是一个队列,队列的最大的特性就是先进先出.不过在优先级队列中数据的出队顺序不是先进先出,而是按照优先级来,优先级最高的优先出队.</p>
+<p>用堆来实现优先级队列是最直接,最高效的,这是因为堆和优先级队列非常相似.一个堆就可以看作一个优先级队列.它们只是概念上的区分而已.往优先级队列中插入一个元素就相当于往堆中插入一个元素;从优先级队列中取出优先级最高的元素,就相当于取出栈顶元素.</p>
+<p>优先级队列的应用场景非常多.比如,赫夫曼编码,图的最短路径,最小生成树的算法等.不仅如此,很多语言中,都提供了优先级队列的实现,比如Java中的PriorityQueue,C++中的priority_queue.</p>
+<h4 id="合并有序小文件"><a href="#合并有序小文件" class="headerlink" title="合并有序小文件"></a>合并有序小文件</h4><p>假设有100个小文件,每个文件的大小都是100MB,每个文件中存储的都是有序字符串.我们希望将这100个文件合并成一个有序的大文件.这就需要用到优先级队列.</p>
+<p>整体思路有点像归并排序中的合并函数.我们从这100个文件中各取第一个字符串放入数组中,然后比较大小,把最小的字符串放入合并后的大文件中,并从数组中删除.</p>
+<p>假设,这个最小字符串来自于13.txt这个文件,我们就再从这个小文件取下一个字符串,并且放到数组中,重新比较大小,并且选择最小的放入合并后的大文件,并将它从数组中删除.依次类推,直到所有文件中的数据都放入到大文件为止.</p>
+<p>这里我们用的是数组这种数据结构,来完成上述操作,显然这不是很高效.怎样提高效率呢?</p>
+<p>这就可以使用优先队列,也可以说是堆.我们将从小文件中取出的字符串放入到小顶堆中,那堆顶的元素,也就是优先级队列队首的元素,就是最小的字符串,我们将这个字符串放入到大文件中,并将其从堆中删除.然后再从小文件中,取下一个字符串,放入堆中.循环这个过程就可以将100个小文件合并成一个大文件.</p>
+<h4 id="高性能定时器"><a href="#高性能定时器" class="headerlink" title="高性能定时器"></a>高性能定时器</h4><p>假设我们有一个定时器,定时器中维护了多个定时任务,每个定时任务设置了一个要触发执行的时间点.定时器每过一个很小的单位时间(比如1秒),就扫描一遍任务,看是否有任务到达了执行的时间,如果有就执行.</p>
+<p>但是,这样每过一秒就扫描一遍任务列表的做法比较低效.主要原因有两点,第一,任务约定的执行时间离当前时间可能还要很久,这样前面多次的扫描都是徒劳的;第二每次都要扫描整个任务列表,如果列表很大的话,比较耗时.</p>
+<p>针对上边这些问题,我们可以用优先级队列来解决.我们按照任务设定的执行时间,将这些任务存储在优先级队列中,队列首部(也就是小顶堆的堆顶)存储的是最先执行的任务.</p>
+<p>这样,定时器就不需要每隔1秒就扫描一遍任务列表了.它拿队首任务的执行时间点,与当前时间点,相减,得到一个时间间隔T.</p>
+<p>这个时间间隔T就是,从当前时间开始,需要等待多久,才会有第一个任务需要被执行.这样定时器就可以设定在T秒之后,再来执行任务.从当前时间点(T-1)秒这段时间里,定时器都不需要做任何事.</p>
+<p>当T秒时间过去后,定时器取优先级队列队首的任务执行.然后再计算新的队首任务的执行时间间隔与当前时间的差值,把这个值作为定时器执行下一个任务需要等待的时间</p>
+<h3 id="应用二-利用堆求TopK"><a href="#应用二-利用堆求TopK" class="headerlink" title="应用二: 利用堆求TopK"></a>应用二: 利用堆求TopK</h3><p>我们把求TopK的问题分成两类.一类是针对静态数据集合,也就说数据集合提前确定,不会改变.另一类是针对动态数据集合.</p>
+<p>针对静态数据,如何在一个包含n个数据的数组中,查找前k大数据呢?我们维护一个大小为K的小顶堆,顺序遍历数组,从数组中取出数据与堆顶元素比较.如果比堆顶元素大,我们就把堆顶元素删除,并且将这个元素插入到堆中;如果比堆顶元素小,则不出理,继续遍历数组.</p>
+<p>遍历数组的时间复杂度是O(n),一次堆化操作的时间复杂度是O(logK),所以最坏的情况下,n个元素都入堆一次,时间复杂度是O(nlogk).</p>
+<p>针对动态数据求TopK.例如一个数据集合中有两个操作,一个是添加操作,一个是询问当前K大数据.</p>
+<p>如果每次询问K大数据,我们都基于当前数据计算的话,那时间复杂度就是O(nlogK),n表示当前数据的大小.实际上我们可以一直维护一个K大小的小顶堆,当有数据添加到集合中时,我们就拿它与堆顶元素对比.如果比堆顶元素大,我们就把堆顶元素删除,并且将这个元素插入到堆中;如果比堆顶元素小,则不做处理.这样无论何时何时查询当前K大数据,我们都可以立即返回.</p>
+<h3 id="应用三-求中位数"><a href="#应用三-求中位数" class="headerlink" title="应用三: 求中位数"></a>应用三: 求中位数</h3><p>中位数,就是处在中间位置的那个数.如果数据的个数是奇数,把数据从小到大排列那第 n/2 + 1 个数据就是中位数.如果是偶数,那出于中间位置的有两个,第 n/2 和第 n/2+1 个数据,这时候可以任意取一个作为中位数.</p>
+<p>对于一组静态数据,中位数是固定的,先排序,第 n/2 个数就是中位数,每次询问中位数,直接返回这个值就好了.所以,尽管排序的的代价比较大,但是边际成本会很小.</p>
+<p>对于动态数据,中位数在不停的变动,如果还是先排序的方法,那每次询问中位数,都要先排序,那效率就不高了.</p>
+<font color="red">借助堆这种数据结构,我们不用排序,就可以非常高效的实现求中位数操作.</font>
+
+<p>我们维护两个堆,一个大顶堆,一个小顶堆.大顶堆中存储前半部分数据,小顶堆中存储后半部分数据,且小顶堆的数据都要大于大顶堆中的数据.</p>
+<p>也就是说n个数据,n是偶数,我们从小到大排序,那前 n/2 个数据存储在大顶堆中,后 n/2 个数据存储在小顶堆中.这样大顶堆中的堆顶元素就是我们要找的中位数.如果n是奇数,情况类似,大顶堆中就存储 n/2+1 个数据,小顶堆中就存储 n/2 个数据.</p>
+<p>我们前面也提到,数据是动态变化的,当新添加一个数据之后,我们如何调整这两个堆呢.</p>
+<p>如果新加入的数据小于等于大顶堆的堆顶元素,我们就将这个数据插入到大顶堆;如果新添加的数据大于等于小顶堆的堆顶元素,就将这个数据插入到小顶堆.</p>
+<p>这个时候,就会出现,两个堆中的数据个数不符合前面的约定情况.这个时候我们可以从一个堆中不停的将堆顶元素移动到另一个堆.</p>
+<p>//TODO 图32</p>
+<p>于是我们就用两个堆,一个大顶堆,一个小顶堆,实现在动态集合中求中位数的操作.插入数据因为涉及堆化,时间复杂度就变成了O(logn),但求中位数,我们只需要返回大顶堆的堆顶数据就行,时间复杂度是O(1).</p>
+<p>实际上,利用两个堆还可以求出其他百分位的数据,原理类似求中位数.例如如何快速求接口的99% 响应时间</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/笔记/" rel="tag"># 笔记</a>
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/07/数据结构与算法-13-红黑树/" rel="next" title="数据结构与算法(13)_红黑树">
+                <i class="fa fa-chevron-left"></i> 数据结构与算法(13)_红黑树
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/01/18/数据结构与算法-15-图/" rel="prev" title="数据结构与算法(15)_图">
+                数据结构与算法(15)_图 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/head.jpg"
+                alt="zhangxy" />
+            
+              <p class="site-author-name" itemprop="name">zhangxy</p>
+              <p class="site-description motion-element" itemprop="description">路漫漫其修远兮</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">33</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/zhangxuyang321" target="_blank" title="GitHub">GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="zhangxuyang321@gmail.com" target="_blank" title="E-Mail">E-Mail</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/u/5207372383/home" target="_blank" title="微博">微博</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何理解”堆”"><span class="nav-number">2.</span> <span class="nav-text">如何理解”堆”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何实现一个堆"><span class="nav-number">3.</span> <span class="nav-text">如何实现一个堆</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#往堆中插入一个元素"><span class="nav-number">3.1.</span> <span class="nav-text">往堆中插入一个元素</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#堆化-从下往上"><span class="nav-number">3.1.1.</span> <span class="nav-text">堆化_从下往上</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除对顶元素"><span class="nav-number">4.</span> <span class="nav-text">删除对顶元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何基于堆实现排序"><span class="nav-number">5.</span> <span class="nav-text">如何基于堆实现排序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#建堆"><span class="nav-number">5.1.</span> <span class="nav-text">建堆</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#排序"><span class="nav-number">5.2.</span> <span class="nav-text">排序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实际开发中为什么快速排序比堆排序性能好"><span class="nav-number">6.</span> <span class="nav-text">实际开发中为什么快速排序比堆排序性能好</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#堆排序数据访问的方式没有快速排序友好"><span class="nav-number">6.1.</span> <span class="nav-text">堆排序数据访问的方式没有快速排序友好.</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对于同样的数据-堆排序算法的交换次数要多余快速排序"><span class="nav-number">6.2.</span> <span class="nav-text">对于同样的数据,堆排序算法的交换次数要多余快速排序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#堆的应用"><span class="nav-number">7.</span> <span class="nav-text">堆的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#应用一-优先级队列"><span class="nav-number">7.1.</span> <span class="nav-text">应用一: 优先级队列</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#合并有序小文件"><span class="nav-number">7.1.1.</span> <span class="nav-text">合并有序小文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#高性能定时器"><span class="nav-number">7.1.2.</span> <span class="nav-text">高性能定时器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#应用二-利用堆求TopK"><span class="nav-number">7.2.</span> <span class="nav-text">应用二: 利用堆求TopK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#应用三-求中位数"><span class="nav-number">7.3.</span> <span class="nav-text">应用三: 求中位数</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhangxy</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

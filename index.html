@@ -286,7 +286,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/04/okHttp解析/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/30/Webview全部配置/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zhangxy">
@@ -305,7 +305,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/06/04/okHttp解析/" itemprop="url">okHttp解析</a></h1>
+                <a class="post-title-link" href="/2019/04/30/Webview全部配置/" itemprop="url">Webview全部配置</a></h1>
         
 
         <div class="post-meta">
@@ -317,7 +317,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-04T10:31:58+08:00">2018-06-04</time>
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-30T15:04:16+08:00">2019-04-30</time>
             
 
             
@@ -338,7 +338,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/源码解析/" itemprop="url" rel="index"><span itemprop="name">源码解析</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a></span>
 
                 
                 
@@ -373,13 +373,27 @@
 
       
         
-          <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>OkHttp 现在作为Android时下最流行的网络框架(Retrofit 也是以OkHttp为底层的).先将okhttp的学习整理如下,本文是以3.10版本进行分析.(因为3.9版本跟3.10版本差别不大,有些图片的引用还是3.9的)</p>
-<p>感谢: <a href="https://blog.csdn.net/json_it/article/details/78404010" target="_blank" rel="noopener">json_it的博客</a>  <a href="http://www.mamicode.com/info-detail-2161332.html" target="_blank" rel="noopener">码迷</a></p>
-<p><img src="http://okskqdic8.bkt.clouddn.com/okhttp_1.jpg" width="500/"></p>
-<h2 id="okhttp网络请求流程"><a href="#okhttp网络请求流程" class="headerlink" title="okhttp网络请求流程"></a>okhttp网络请求流程</h2><p>以官网demo为例进行分析</p>
+          <pre><code>//应用缓存API是否可用，默认值false, 结合setAppCachePath(String)使用。
+s.setAppCacheEnabled(true);
+
+//设置应用缓存文件的路径。
+s.setAppCachePath(&quot;&quot;);
+
+// 设置是否允许通过 file url 加载的 Javascript 可以访问其他的源(包括http、https等源)
+//4.1以后默认禁止
+s.setAllowUniversalAccessFromFileURLs(false);
+
+// 设置是否允许通过 file url 加载的 Js代码读取其他的本地文件
+//4.1以后默认禁止
+s.setAllowFileAccessFromFileURLs(true);
+
+// 是否允许访问文件，默认允许。注意，这里只是允许或禁止对文件系统的访问
+// Assets 和 resources 文件使用file:///android_asset和file:///android_res仍是可访问的。
+s.setAllowFileAccess(true);
+</code></pre>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/06/04/okHttp解析/#more" rel="contents">
+            <a class="btn" href="/2019/04/30/Webview全部配置/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -435,7 +449,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/06/面试总结/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/18/数据结构与算法-15-图/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zhangxy">
@@ -454,7 +468,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/06/面试总结/" itemprop="url">面试总结</a></h1>
+                <a class="post-title-link" href="/2019/01/18/数据结构与算法-15-图/" itemprop="url">数据结构与算法(15)_图</a></h1>
         
 
         <div class="post-meta">
@@ -466,7 +480,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-06T10:29:01+08:00">2018-03-06</time>
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-18T14:30:08+08:00">2019-01-18</time>
             
 
             
@@ -487,7 +501,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/面试/" itemprop="url" rel="index"><span itemprop="name">面试</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
 
                 
                 
@@ -522,15 +536,47 @@
 
       
         
-          <p>基于鸿洋<a href="http://mp.weixin.qq.com/s/p3l9wr4DX976Lr62-dYe8w" target="_blank" rel="noopener">公众号文章</a>整理答案</p>
-<h1 id="java-面试题"><a href="#java-面试题" class="headerlink" title="java 面试题"></a>java 面试题</h1><h2 id="java基础"><a href="#java基础" class="headerlink" title="java基础"></a>java基础</h2><h3 id="java中-和equals和hashCode的区别"><a href="#java中-和equals和hashCode的区别" class="headerlink" title="java中==和equals和hashCode的区别"></a>java中==和equals和hashCode的区别</h3>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/06/面试总结/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+          
+            <h2 id="如何理解图"><a href="#如何理解图" class="headerlink" title="如何理解图"></a>如何理解图</h2><p>图是一种 非线性表数据结构,和树比起来,更加复杂.图中的元素我们叫做<font color="red">顶点</font>.图中的一个顶点与任意其他顶点建立连接关系,我们把建立的关系叫做<font color="red">边</font>.</p>
+<p>社交网络就是一个非常典型的图结构.以微信举例,把每个用户看成一个顶点.如果两个用户加好友,那就在两者之间建立一条边.所以,整个微信的好友关系就可以用一张图来表示.其中每个用户有多少好友,对应到图中,就叫做顶点的<font color="red">度</font>,就跟顶点相连的边的条数.</p>
+<p>我们可以把上边的图结构改造一下,引入边的”方向”的概念.我们把这种边有方向的图叫做<font color="red">“有向图”</font>,边没有方向的叫做<font color="red">“无向图”</font>.</p>
+<p>在有向图中,把度分为<font color="red">入度</font>和<font color="red">出度</font>.顶点的入度表示有多少条边指向这个顶点;顶点的出度表示有多少条边以这个顶点为起点指向其他顶点.</p>
+<p>如果边带有权重,那这种图就叫做<font color="red">带权图</font>,例如QQ好友的亲密度.</p>
+<h2 id="存储图"><a href="#存储图" class="headerlink" title="存储图"></a>存储图</h2><h3 id="邻接矩阵存储"><a href="#邻接矩阵存储" class="headerlink" title="邻接矩阵存储"></a>邻接矩阵存储</h3><p>图最直观的一种存储方法就是,邻接矩阵.</p>
+<p>邻接矩阵的底层依赖的是一个二维数组.对于无向图来说,如果顶点i与顶点j之间有边,我们就将 A[i][j] 和 A[j][i] 标记为 1; 对于有向图来说,如果有一条箭头从顶点 i 指向顶点 j 的边,那我们就将 A[i][j] 标记为 1 . 同理,如果有一条箭头从顶点 j 指向顶点 i 的边,那我们就将 A[j][i] 标记为1. 对于权重图,数组中就存储响应的权重.</p>
+<p>用邻接矩阵表示一个图,虽然简单直观,但是比较浪费内存空间.</p>
+<p>对于无向图来说,如果 A[i][j] 为1, 那么 A[j][i] 也肯定等于 1.实际上我们只需要存储一个就可以了.</p>
+<p>如果我们存储的是<font color="red">稀疏图</font>,也就是说顶点很多但每个顶点的边不多,那邻接矩阵的存储方法就更加浪费空间了.</p>
+<h3 id="邻接表存储"><a href="#邻接表存储" class="headerlink" title="邻接表存储"></a>邻接表存储</h3><p>邻接表存储方式如图.每一个顶点都对应一条链表,链表中存储的是与这个顶点相连的其他点.图中画的是一个有向图,每个顶点对应的链表里面,存储的是指向的顶点.</p>
+<p>//TODO 图33</p>
+<p>邻接表存储比较节省空间,但是使用起来就比较耗时.但是我们可以将链表改成平衡二叉树.实际开发中,还可以选择红黑树.这样我们就可以更快的查找两个顶点之间是否存在边.</p>
+<h2 id="深度和广度优先搜索"><a href="#深度和广度优先搜索" class="headerlink" title="深度和广度优先搜索"></a>深度和广度优先搜索</h2><p>在社交网络中有一个<font color="red">六度分割理论</font>,具体的说,你与世界上的另一个的间隔的关系不会超过六度,也就是说平均只需要六步就可以联系到任何两个不认识的人.</p>
+<p>一个用户的一度链接用户,就是他的好友.二度链接用户就是他好友的好友.三度链接好友就是他好友的好友的好友.在社交网络中,我们往往通过用户之间的链接关系,来实现推荐”可能认识的人”这么一个功能.</p>
+<h3 id="什么是”搜索”算法"><a href="#什么是”搜索”算法" class="headerlink" title="什么是”搜索”算法"></a>什么是”搜索”算法</h3><p>算法是作用于具体数据结构上的,深度优先搜索算法和广度优先搜索算法都是基于”图”这种数据结构.这是因为,图这种数据结构表达能力很强,大部分设计搜索的场景都可以抽象成图.</p>
+<p>图上的搜索算法,最直接理解的就是,在图中找出从一个顶点出发,到另一个 顶点的路径.具体方法有很多.比如最”暴力”的深度优先,广度优先,还有A<em>, IDA</em> 等启发式搜索算法.</p>
+<p>今天我们会用邻接表来存储图.深度优先和广度优先算法既可以用在无向图,可以用在有向图上.今天都是以无向图来讲解.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//无向图</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Graph</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> v; <span class="comment">//顶点个数</span></span><br><span class="line">	<span class="keyword">private</span> LinkedList&lt;Integer&gt; adj[]; <span class="comment">//邻接表</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Graph</span><span class="params">(<span class="keyword">int</span> v)</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.v = v;</span><br><span class="line">		adj = <span class="keyword">new</span> LinkedList[v];</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;v; i++)&#123;</span><br><span class="line">			adj[i] = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addEdge</span><span class="params">(<span class="keyword">int</span> s, <span class="keyword">int</span> t)</span></span>&#123; <span class="comment">//无向图一条边存两次</span></span><br><span class="line">		adj[s].add(t);</span><br><span class="line">		adj[t].add(s);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="广度优先搜索-BFS"><a href="#广度优先搜索-BFS" class="headerlink" title="广度优先搜索 (BFS)"></a>广度优先搜索 (BFS)</h3><p>广度优先搜索(Breadth-First-Search),它就是一种”地毯式”层层推进的搜索策略,即先查找离起始顶点最近的,然后是次近的,依次往外搜索.如图</p>
+<p>//TODO 图34</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">bfs</span><span class="params">(<span class="keyword">int</span> s, <span class="keyword">int</span> t)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(s == t) <span class="keyword">return</span>;</span><br><span class="line">	<span class="keyword">boolean</span>[] visited = <span class="keyword">new</span> <span class="keyword">boolean</span>[v];</span><br><span class="line">	visited[s] = <span class="keyword">true</span>;</span><br><span class="line">	Queue&lt;Integer&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">	queue.add(s);</span><br><span class="line">	<span class="keyword">int</span>[] prev = <span class="keyword">new</span> <span class="keyword">int</span>[v];</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;v; i++)&#123;</span><br><span class="line">		prev[i] = -<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span>(queue.size() != <span class="number">0</span>)&#123;</span><br><span class="line">		<span class="keyword">int</span> w = queue.poll();</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i &lt; adj[w].size(); i++)&#123;</span><br><span class="line">			<span class="keyword">int</span> q = adj[w].get(i);</span><br><span class="line">			<span class="keyword">if</span>(!visited[q])&#123;</span><br><span class="line">				prev[q] = w;</span><br><span class="line">				<span class="keyword">if</span>(q == t)&#123;</span><br><span class="line">					print(prev, s, t);</span><br><span class="line">					<span class="keyword">return</span>;</span><br><span class="line">				&#125;</span><br><span class="line">				visited[q] = <span class="keyword">true</span>;</span><br><span class="line">				queue.add(q);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;	</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//递归打印s-&gt;t的路径</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">int</span>[] prev, <span class="keyword">int</span> s, <span class="keyword">int</span> t)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(prev[t] != -<span class="number">1</span> &amp;&amp; t != s)&#123;</span><br><span class="line">		print(prev, s, prev[t]);</span><br><span class="line">	&#125;</span><br><span class="line">	System.out.print(t + <span class="string">" "</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里的bfs()方法就是图的广度优先搜索的代码实现,其中s表示起始顶点,t 表示终止顶点.我们搜索一条s到t 的路径.实际上这样求得的路径就是最短路径.</p>
+<p>这段代码里有三个重要的变量 visited, queue, prev.</p>
+<p>visited是用来标记已经访问到的顶点,用来避免重复访问.</p>
+<p>queue是一个队列,用来存储已经被访问,但相连的顶点还没有被访问的顶点.因为广度优先是逐层访问的,也就是说我们只有把第k层的顶点都访问完成之后,才能访问第k + 1 层的顶点.当我们访问到第k层顶点的时候,我们需要把第看层的顶点记录下来稍后才能通过k层顶点来找k+1层的顶点.</p>
+<p>prev用来记录搜索路径.当我们从s点开始,广度优先搜索到t后,prev中存储的就是搜索路径.不过这个路径是反向存储的.prev[w] 存储的是,顶点w是从哪个前驱顶点遍历过来的.比如当我们通过顶点2的邻接表访问到顶点3,那prev[3]就等于2.为了正向打印出路径,我们需要递归来打印.</p>
+<p>广度优先分解图如下:</p>
+<p>//TODO 图35,36,37</p>
+<p>最坏情况下终止顶点t 离起始顶点 s 很远,需要遍历整个图才能找到.这个时候每个顶点都要进出一遍队列,每个边也会被访问一次,所以广度搜索的时间复杂度是O(V+E).其中V表示顶点个数,E表示边的个数.对于一个连通图来说,也就是说一个图中所有顶点都是连通的,E肯定要大于等于V-1,所以说时间复杂度也可以简写为O(E).</p>
+<p>广度优先搜索的空间消耗主要在visited数据,queue队列,prev数组上,这三个存储的空间的大小不会超过顶点个数,所以空间复杂度是O(V).</p>
+<h3 id="深度优先搜索-DFS"><a href="#深度优先搜索-DFS" class="headerlink" title="深度优先搜索(DFS)"></a>深度优先搜索(DFS)</h3><p>深度优先搜索,最直观的例子就是走迷宫.</p>
+<p>//TODO 图38</p>
+<p>搜索的起始顶点是 s ,终止顶点是 t ,我们希望从图中找到一条顶点 s 到 顶点 t 的路径.我用深度递归算法把整个搜索路径标记出来了.这里面实线箭头表示遍历,虚线箭头表示回退.</p>
+<p>实际上深度优先算法是一种比较著名的算法思想,回溯思想.这种思想解决问题的过程非常适合用递归来实现.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">boolean</span> found = <span class="keyword">false</span>; <span class="comment">// 全局变量或者类成员变量</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> s, <span class="keyword">int</span> t)</span></span>&#123;</span><br><span class="line">	found = <span class="keyword">false</span>;</span><br><span class="line">	<span class="keyword">boolean</span>[] visited = <span class="keyword">new</span> <span class="keyword">boolean</span>[v];</span><br><span class="line">	<span class="keyword">int</span>[] prev = <span class="keyword">new</span> <span class="keyword">int</span>[v];</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;v; i++)&#123;</span><br><span class="line">		prev[i] = -<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	recurDfs(s, t, visited, prev);</span><br><span class="line">	print(prev, s, t);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">recurDfs</span><span class="params">(<span class="keyword">int</span> w, <span class="keyword">int</span> t, <span class="keyword">boolean</span>[] visited, <span class="keyword">int</span>[] prev)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(found) <span class="keyword">return</span>;</span><br><span class="line">	visited[w] = <span class="keyword">true</span>;</span><br><span class="line">	<span class="keyword">if</span>(w == t) &#123;</span><br><span class="line">		found = <span class="keyword">true</span>;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;adj[w].size(); i++)&#123;</span><br><span class="line">		<span class="keyword">int</span> q = adj[w].get(i);</span><br><span class="line">		<span class="keyword">if</span>(!visited[q])&#123;</span><br><span class="line">			prev[q] = w;</span><br><span class="line">			recurDfs(q, t, visited, prev);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>深度优先算法代码实现也用到了 visited, prev 变量,它们跟广度优先算法中的作用是一样的.不过深度优先算法有个一个特殊变量found,用来标识是否找到终点 t ,然后结束递归.</p>
+<p>深度优先算法的时间复杂度是O(E).空间复杂度是O(V).</p>
+
+          
         
       
     </div>
@@ -582,7 +628,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/17/EventBus源码解析/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/14/数据结构与算法-14-堆/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zhangxy">
@@ -601,7 +647,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/08/17/EventBus源码解析/" itemprop="url">EventBus源码解析</a></h1>
+                <a class="post-title-link" href="/2019/01/14/数据结构与算法-14-堆/" itemprop="url">数据结构与算法(14)_堆</a></h1>
         
 
         <div class="post-meta">
@@ -613,7 +659,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-17T17:33:31+08:00">2017-08-17</time>
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-14T14:55:06+08:00">2019-01-14</time>
             
 
             
@@ -634,7 +680,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/源码解析/" itemprop="url" rel="index"><span itemprop="name">源码解析</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
 
                 
                 
@@ -669,621 +715,420 @@
 
       
         
-          <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>EventBus在Android开发中运用很广泛,在观看其源码后受益颇深,现将源码笔记整理如下</p>
-<h2 id="EventBus注册流程"><a href="#EventBus注册流程" class="headerlink" title="EventBus注册流程"></a>EventBus注册流程</h2><h3 id="注册部分整体流程图如下"><a href="#注册部分整体流程图如下" class="headerlink" title="注册部分整体流程图如下"></a>注册部分整体流程图如下</h3><ul>
-<li><img src="http://okskqdic8.bkt.clouddn.com/register.png" width="70%" height="70%"></li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/08/17/EventBus源码解析/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/30/React-Ntive性能优化笔记/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zhangxy">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/head.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="zhangxy">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/30/React-Ntive性能优化笔记/" itemprop="url">React-Ntive性能优化笔记</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-30T11:38:56+08:00">2017-07-30</time>
-            
-
-            
-            
-
-            
-          </span>
-
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/ReactNative/" itemprop="url" rel="index"><span itemprop="name">ReactNative</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><pre><code>ReactNative作为时下流行的跨平台开发语言,其性能可以与原生媲美.但在开发过程种,因为程序编写不当,也会有很多&quot;卡顿&quot;发生,在学习了性能优化方面的知识后,现将具体的优化方法总结如下.
-</code></pre><p>##主要优化方式</p>
-<blockquote>
-<p>减少render</p>
-</blockquote>
-<h2 id="PureComponent-amp-Component"><a href="#PureComponent-amp-Component" class="headerlink" title="PureComponent &amp; Component"></a>PureComponent &amp; Component</h2><h3 id="优化场景"><a href="#优化场景" class="headerlink" title="优化场景"></a>优化场景</h3><blockquote>
-<p>在实际开发中,一般我们都会继承Component来实现各种各样的组件,并且也经常会出现组件之间的嵌套,即父子组件.在这样的情况下,如果父组件的State发生改变,那么父组件render将会被重新执行.如果子组件此时也是继承的Component,那么子组件的render方法也将会被重新执行,但是子组件的State并没有发生改变,这样无疑浪费了很多性能.</p>
-</blockquote>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/30/React-Ntive性能优化笔记/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/20/算法总结/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zhangxy">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/head.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="zhangxy">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/20/算法总结/" itemprop="url">算法总结</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-20T14:50:00+08:00">2017-06-20</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/笔记/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><blockquote>
-<p>开发以及平常阅读中所遇到的算法总结</p>
-</blockquote>
-<h2 id="猫扑素数-Mop-primes"><a href="#猫扑素数-Mop-primes" class="headerlink" title="猫扑素数(Mop primes)"></a>猫扑素数(Mop primes)</h2><h3 id="名词解释"><a href="#名词解释" class="headerlink" title="名词解释"></a>名词解释</h3><ul>
-<li>素数: 即质数,有无限个. 质数定义为在大于1的自然数中,除了1和它本身以外不在有其他因数</li>
-<li>猫扑素数: 形如以2开头,之后跟任意多个3的十进制整数并且是素数,则它就是猫扑素数. 如 2, 23, 233, 2333, 23333都是猫扑素数. 而233333则不是,它可以分解为353 x 661</li>
-</ul>
-<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/06/20/算法总结/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/22/命令行/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zhangxy">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/head.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="zhangxy">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/05/22/命令行/" itemprop="url">命令行</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-22T17:00:07+08:00">2017-05-22</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/笔记/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>#命令行笔记</p>
-<h2 id="git"><a href="#git" class="headerlink" title="git"></a>git</h2>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/05/22/命令行/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/05/JavaScrip浏览器对象/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zhangxy">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/head.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="zhangxy">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/04/05/JavaScrip浏览器对象/" itemprop="url">JavaScrip浏览器对象</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-05T16:49:08+08:00">2017-04-05</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="window"><a href="#window" class="headerlink" title="window"></a>window</h2><blockquote>
-<p>window即是全局作用域也是浏览器窗口</p>
-</blockquote>
+            <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>“堆”(Heap) 是一种特殊的树,它的应用场景非常多,最经典的莫过于堆排序.堆排序是一种原地的,时间复杂度为O(nlogn)的排序算法.</p>
+<h2 id="如何理解”堆”"><a href="#如何理解”堆”" class="headerlink" title="如何理解”堆”"></a>如何理解”堆”</h2><p>什么样的树才是堆?需要满足两点要求:</p>
 <ul>
-<li><p>window对象的innerWidth 和 innerHeight属性表示,浏览器窗口内部的宽高.(内部宽高指出去菜单栏,工具栏,边框等占位元素后,用于显示网页的净宽高)</p>
-</li>
-<li><p>window对象的outerWidth和outerHeight表示浏览器窗口的整个宽高</p>
-</li>
+<li>堆是一个完全二叉树</li>
+<li>堆中的每一个节点的值都必须大于等于(或小于等于)其子树中每个节点的值</li>
 </ul>
-<h2 id="navigator-浏览器的信息"><a href="#navigator-浏览器的信息" class="headerlink" title="navigator(浏览器的信息)"></a>navigator(浏览器的信息)</h2>
+<p>对于每个节点的值都大于等于子树中每个节点的值的堆,我们叫做”大顶堆”;对于每个节点的值都小于等于子树中每个节点的值的堆,我们叫做”小顶堆”.</p>
+<p>//TODO 图25</p>
+<p>其中1,2是”大顶堆”,3是”小顶堆”,4不是堆.对于同一种数据,我们可以构建不同的堆形态.</p>
+<h2 id="如何实现一个堆"><a href="#如何实现一个堆" class="headerlink" title="如何实现一个堆"></a>如何实现一个堆</h2><p>完全二叉树比较适合用数组来存储,如图一个用数组存储堆的例子:</p>
+<p>//TODO 图26</p>
+<p>从图中可以看到,数组中下标为i的节点的左子节点,就是下标为i <em> 2的节点,又子节点就是下标为i </em> 2 + 1的节点,父节点就是下标为i/2的节点.</p>
+<h3 id="往堆中插入一个元素"><a href="#往堆中插入一个元素" class="headerlink" title="往堆中插入一个元素"></a>往堆中插入一个元素</h3><p>往堆中插入一个元素后,我们需要满足堆的两个要求.</p>
+<p>如果我们把新插入的元素放到堆的最后,如图,已经不符合堆的特性了,于是我们需要进行调整,让其重新满足特性这个过程就叫<font color="red">堆化</font>.</p>
+<p>//TODO 图27</p>
+<p>堆化有两种方式,从下往上和从上往下.</p>
+<h4 id="堆化-从下往上"><a href="#堆化-从下往上" class="headerlink" title="堆化_从下往上"></a>堆化_从下往上</h4><p>堆化非常简单就是顺着节点所在的路径向上或者向下,对比,然后交换.</p>
+<p>我们可以让新插入的节点与父节点比较大小.如果不满足子节点小于等于父节点的要求,我们就互换两个节点.一直重复这个过程,直到父子节点之间的关系满足.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Heap</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span>[] a; <span class="comment">//数组a,从下标1开始存储数据</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> n;   <span class="comment">//堆可以存储的最大数据</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> count; <span class="comment">//堆中已经存在的数据个数</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Heap</span><span class="params">(<span class="keyword">int</span> capacity)</span></span>&#123;</span><br><span class="line">		a = <span class="keyword">new</span> <span class="keyword">int</span>[capacity + <span class="number">1</span>];</span><br><span class="line">		n = capacity;</span><br><span class="line">		count = <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">(<span class="keyword">int</span> data)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(count &gt;= n) <span class="keyword">return</span>;</span><br><span class="line">		++count;</span><br><span class="line">		a[count] = data;</span><br><span class="line">		<span class="keyword">int</span> i = count;</span><br><span class="line">		<span class="keyword">while</span>(i/<span class="number">2</span> &gt; <span class="number">0</span> &amp;&amp; a[i] &gt; a[i/<span class="number">2</span>])&#123;</span><br><span class="line">			swap(a, i, i/<span class="number">2</span>); <span class="comment">//用于交换下标为 i 和 i/2 的两个元素</span></span><br><span class="line">			i = i/<span class="number">2</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="删除对顶元素"><a href="#删除对顶元素" class="headerlink" title="删除对顶元素"></a>删除对顶元素</h2><p>从堆的第二条定义中,任何节点的值都大于等于(或小于等于)子树节点的值,我们可以发现堆顶元素存储的就是最大值或最小值.</p>
+<p>假设我们构造的是大顶堆,堆顶元素就是最大元素,当我们删除堆顶元素后,就需要把第二大元素放在堆顶,那第二大元素肯定会出现在左右子节点中.然后我们再迭代的删除第二大节点,以此类推直到叶子节点被删除.不过这种方法有点问题,就是最后堆化出来的堆并不满足完全二叉树的特性.</p>
+<p>实际上,我们需要改变一下思路,来解决这个问题.我们把最后一个节点放在堆顶,然后利用同样的父子节点对比方法.对于不满足父子节点大小关系的,互换两个节点,并且重复执行这个过程,直到父子节点满足大小关系为止.这就是<font color="red">从上往下的堆化方法</font>.</p>
+<p>//TODO 图28</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">removeMax</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(count == <span class="number">0</span>) <span class="keyword">return</span>;</span><br><span class="line">	a[<span class="number">1</span>] = a[count];</span><br><span class="line">	--count;</span><br><span class="line">	heapify(a, count, <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">heapify</span><span class="params">(<span class="keyword">int</span>[] a, <span class="keyword">int</span> n, <span class="keyword">int</span> i)</span></span>&#123;</span><br><span class="line">	<span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">		<span class="keyword">int</span> maxPos = i;</span><br><span class="line">		<span class="keyword">if</span>(i*<span class="number">2</span> &lt;= n &amp;&amp; a[i] &lt; a[i*<span class="number">2</span>]) maxPos = i * <span class="number">2</span>;</span><br><span class="line">		<span class="keyword">if</span>(i*<span class="number">2</span>+<span class="number">1</span> &lt;=n &amp;&amp; a[maxPos] &lt; a[i*<span class="number">2</span>+<span class="number">1</span>]) maxPos = i*<span class="number">2</span> +<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">if</span>(maxPos == i) <span class="keyword">break</span>;</span><br><span class="line">		swap(a, i, maxPos);</span><br><span class="line">		i = maxPos;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们知道,一个包含n个节点的安全二叉树,树的高度不会超过$$log_2n$$.堆化的过程是顺着节点所在的路径来比较交换的,所以堆化的时间复杂度跟树的高度成正比,也就是O(logn).插入数据和删除堆顶数据主要逻辑就是堆化,所以往堆中插入一个数据和删除堆顶数据的时间复杂度都是O(logn).</p>
+<h2 id="如何基于堆实现排序"><a href="#如何基于堆实现排序" class="headerlink" title="如何基于堆实现排序"></a>如何基于堆实现排序</h2><p>我们可以把堆排序的过程大致拆分成两个步骤,<font color="red">建堆</font>和<font color="red">排序</font>.</p>
+<h3 id="建堆"><a href="#建堆" class="headerlink" title="建堆"></a>建堆</h3><p>我们首先将数组原地建成一个堆.建堆过程有两种思路.</p>
+<p>第一种就是借助插入元素的思路.尽管数组中包含n个数据但是我们可以假设,起初堆中只包含一个数据,就是下标为1的数据,然后我们调用插入操作,将下标从2到n的数据依次插入到堆中.</p>
+<p>第二种跟第一种截然相反.第一种建堆思路的处理过程是从前往后处理数组数据,并且每个数据插入堆中时,都是从下往上堆化.而第二种是从后往前处理数组,并且每个数据都是从上往下堆化.</p>
+<p>//TODO 图29,30</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">buildHeap</span><span class="params">(<span class="keyword">int</span>[] a, <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = n/<span class="number">2</span>; i &gt;= <span class="number">1</span>; --i;)&#123;</span><br><span class="line">		heapify(a, n, i);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">heapify</span><span class="params">(<span class="keyword">int</span>[] a, <span class="keyword">int</span> n, <span class="keyword">int</span> i)</span></span>&#123;</span><br><span class="line">	<span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">		<span class="keyword">int</span> maxPos = i;</span><br><span class="line">		<span class="keyword">if</span>(i*<span class="number">2</span> &lt;= n &amp;&amp; a[i] &lt; a[i*<span class="number">2</span>]) maxPos = i*<span class="number">2</span>;</span><br><span class="line">		<span class="keyword">if</span>(i*<span class="number">2</span>+<span class="number">1</span> &lt;= n &amp;&amp; a[maxPos] &lt; a[i*<span class="number">2</span>+<span class="number">1</span>]) maxPos = i*<span class="number">2</span>+<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">if</span>(maxPos == i) <span class="keyword">break</span>;</span><br><span class="line">		swap(a, i, maxPos);</span><br><span class="line">		i = maxPos;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码中,我们队下标从n/2开始到1的数据进行堆化,下标是 n/2+1 到 n 的节点是叶子节点我们不需要堆化,实际上对于完全二叉树来说,下标从 n/2+1 到 n 的节点都是叶子节点</p>
+<p>建堆的时间复杂度是O(n);</p>
+<h3 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h3><p>建堆完成后,数组中的数据已经是按照大顶堆的特性来组织的.数组的第一个元素就是堆顶,也是最大元素.我们把它跟最后一个数组交换,那最大元素就放到了下标为n的位置.</p>
+<p>这个过程有点类似”删除堆顶的操作”,当堆顶元素移除之后,我们把原先下标为n的元素放到堆顶,然后再通过堆化方法,将剩下n-1个数据重新构成堆.重复此过程,直到最后堆中只剩下下标为1的一个元素,排序就完成了.</p>
+<p>//todo 图31</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//n表示数据的个数,数组a 中的数据从下标1到n的位置</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sort</span><span class="params">(<span class="keyword">int</span>[] a, <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	buildHeap(a,n);</span><br><span class="line">	<span class="keyword">int</span> k = n;</span><br><span class="line">	<span class="keyword">while</span>(k &gt; <span class="number">1</span>)&#123;</span><br><span class="line">		swap(a,<span class="number">1</span>,k);</span><br><span class="line">		--k;</span><br><span class="line">		heapify(a,k,i);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>整个排序过程中,都只需要极个别的临时存储空间,所以堆排序是原地排序算法.堆排序包括建堆和排序两个操作,建堆过程的时间复杂度是O(n),排序过程的时间复杂的度是O(nlogn),所以堆排序整体的时间复杂度是O(nlogn).</p>
+<p>堆排序不是稳定的排序算法,因为在排序的过程中,存在将堆的最后一个节点跟堆顶节点互换的操作.</p>
+<h2 id="实际开发中为什么快速排序比堆排序性能好"><a href="#实际开发中为什么快速排序比堆排序性能好" class="headerlink" title="实际开发中为什么快速排序比堆排序性能好"></a>实际开发中为什么快速排序比堆排序性能好</h2><h3 id="堆排序数据访问的方式没有快速排序友好"><a href="#堆排序数据访问的方式没有快速排序友好" class="headerlink" title="堆排序数据访问的方式没有快速排序友好."></a>堆排序数据访问的方式没有快速排序友好.</h3><p>对于快速排序来说,数据是顺序访问的而对于堆排序来说,数据是跳着访问的.</p>
+<h3 id="对于同样的数据-堆排序算法的交换次数要多余快速排序"><a href="#对于同样的数据-堆排序算法的交换次数要多余快速排序" class="headerlink" title="对于同样的数据,堆排序算法的交换次数要多余快速排序"></a>对于同样的数据,堆排序算法的交换次数要多余快速排序</h3><h2 id="堆的应用"><a href="#堆的应用" class="headerlink" title="堆的应用"></a>堆的应用</h2><h3 id="应用一-优先级队列"><a href="#应用一-优先级队列" class="headerlink" title="应用一: 优先级队列"></a>应用一: 优先级队列</h3><p>优先级队列.首先,它是一个队列,队列的最大的特性就是先进先出.不过在优先级队列中数据的出队顺序不是先进先出,而是按照优先级来,优先级最高的优先出队.</p>
+<p>用堆来实现优先级队列是最直接,最高效的,这是因为堆和优先级队列非常相似.一个堆就可以看作一个优先级队列.它们只是概念上的区分而已.往优先级队列中插入一个元素就相当于往堆中插入一个元素;从优先级队列中取出优先级最高的元素,就相当于取出栈顶元素.</p>
+<p>优先级队列的应用场景非常多.比如,赫夫曼编码,图的最短路径,最小生成树的算法等.不仅如此,很多语言中,都提供了优先级队列的实现,比如Java中的PriorityQueue,C++中的priority_queue.</p>
+<h4 id="合并有序小文件"><a href="#合并有序小文件" class="headerlink" title="合并有序小文件"></a>合并有序小文件</h4><p>假设有100个小文件,每个文件的大小都是100MB,每个文件中存储的都是有序字符串.我们希望将这100个文件合并成一个有序的大文件.这就需要用到优先级队列.</p>
+<p>整体思路有点像归并排序中的合并函数.我们从这100个文件中各取第一个字符串放入数组中,然后比较大小,把最小的字符串放入合并后的大文件中,并从数组中删除.</p>
+<p>假设,这个最小字符串来自于13.txt这个文件,我们就再从这个小文件取下一个字符串,并且放到数组中,重新比较大小,并且选择最小的放入合并后的大文件,并将它从数组中删除.依次类推,直到所有文件中的数据都放入到大文件为止.</p>
+<p>这里我们用的是数组这种数据结构,来完成上述操作,显然这不是很高效.怎样提高效率呢?</p>
+<p>这就可以使用优先队列,也可以说是堆.我们将从小文件中取出的字符串放入到小顶堆中,那堆顶的元素,也就是优先级队列队首的元素,就是最小的字符串,我们将这个字符串放入到大文件中,并将其从堆中删除.然后再从小文件中,取下一个字符串,放入堆中.循环这个过程就可以将100个小文件合并成一个大文件.</p>
+<h4 id="高性能定时器"><a href="#高性能定时器" class="headerlink" title="高性能定时器"></a>高性能定时器</h4><p>假设我们有一个定时器,定时器中维护了多个定时任务,每个定时任务设置了一个要触发执行的时间点.定时器每过一个很小的单位时间(比如1秒),就扫描一遍任务,看是否有任务到达了执行的时间,如果有就执行.</p>
+<p>但是,这样每过一秒就扫描一遍任务列表的做法比较低效.主要原因有两点,第一,任务约定的执行时间离当前时间可能还要很久,这样前面多次的扫描都是徒劳的;第二每次都要扫描整个任务列表,如果列表很大的话,比较耗时.</p>
+<p>针对上边这些问题,我们可以用优先级队列来解决.我们按照任务设定的执行时间,将这些任务存储在优先级队列中,队列首部(也就是小顶堆的堆顶)存储的是最先执行的任务.</p>
+<p>这样,定时器就不需要每隔1秒就扫描一遍任务列表了.它拿队首任务的执行时间点,与当前时间点,相减,得到一个时间间隔T.</p>
+<p>这个时间间隔T就是,从当前时间开始,需要等待多久,才会有第一个任务需要被执行.这样定时器就可以设定在T秒之后,再来执行任务.从当前时间点(T-1)秒这段时间里,定时器都不需要做任何事.</p>
+<p>当T秒时间过去后,定时器取优先级队列队首的任务执行.然后再计算新的队首任务的执行时间间隔与当前时间的差值,把这个值作为定时器执行下一个任务需要等待的时间</p>
+<h3 id="应用二-利用堆求TopK"><a href="#应用二-利用堆求TopK" class="headerlink" title="应用二: 利用堆求TopK"></a>应用二: 利用堆求TopK</h3><p>我们把求TopK的问题分成两类.一类是针对静态数据集合,也就说数据集合提前确定,不会改变.另一类是针对动态数据集合.</p>
+<p>针对静态数据,如何在一个包含n个数据的数组中,查找前k大数据呢?我们维护一个大小为K的小顶堆,顺序遍历数组,从数组中取出数据与堆顶元素比较.如果比堆顶元素大,我们就把堆顶元素删除,并且将这个元素插入到堆中;如果比堆顶元素小,则不出理,继续遍历数组.</p>
+<p>遍历数组的时间复杂度是O(n),一次堆化操作的时间复杂度是O(logK),所以最坏的情况下,n个元素都入堆一次,时间复杂度是O(nlogk).</p>
+<p>针对动态数据求TopK.例如一个数据集合中有两个操作,一个是添加操作,一个是询问当前K大数据.</p>
+<p>如果每次询问K大数据,我们都基于当前数据计算的话,那时间复杂度就是O(nlogK),n表示当前数据的大小.实际上我们可以一直维护一个K大小的小顶堆,当有数据添加到集合中时,我们就拿它与堆顶元素对比.如果比堆顶元素大,我们就把堆顶元素删除,并且将这个元素插入到堆中;如果比堆顶元素小,则不做处理.这样无论何时何时查询当前K大数据,我们都可以立即返回.</p>
+<h3 id="应用三-求中位数"><a href="#应用三-求中位数" class="headerlink" title="应用三: 求中位数"></a>应用三: 求中位数</h3><p>中位数,就是处在中间位置的那个数.如果数据的个数是奇数,把数据从小到大排列那第 n/2 + 1 个数据就是中位数.如果是偶数,那出于中间位置的有两个,第 n/2 和第 n/2+1 个数据,这时候可以任意取一个作为中位数.</p>
+<p>对于一组静态数据,中位数是固定的,先排序,第 n/2 个数就是中位数,每次询问中位数,直接返回这个值就好了.所以,尽管排序的的代价比较大,但是边际成本会很小.</p>
+<p>对于动态数据,中位数在不停的变动,如果还是先排序的方法,那每次询问中位数,都要先排序,那效率就不高了.</p>
+<font color="red">借助堆这种数据结构,我们不用排序,就可以非常高效的实现求中位数操作.</font>
+
+<p>我们维护两个堆,一个大顶堆,一个小顶堆.大顶堆中存储前半部分数据,小顶堆中存储后半部分数据,且小顶堆的数据都要大于大顶堆中的数据.</p>
+<p>也就是说n个数据,n是偶数,我们从小到大排序,那前 n/2 个数据存储在大顶堆中,后 n/2 个数据存储在小顶堆中.这样大顶堆中的堆顶元素就是我们要找的中位数.如果n是奇数,情况类似,大顶堆中就存储 n/2+1 个数据,小顶堆中就存储 n/2 个数据.</p>
+<p>我们前面也提到,数据是动态变化的,当新添加一个数据之后,我们如何调整这两个堆呢.</p>
+<p>如果新加入的数据小于等于大顶堆的堆顶元素,我们就将这个数据插入到大顶堆;如果新添加的数据大于等于小顶堆的堆顶元素,就将这个数据插入到小顶堆.</p>
+<p>这个时候,就会出现,两个堆中的数据个数不符合前面的约定情况.这个时候我们可以从一个堆中不停的将堆顶元素移动到另一个堆.</p>
+<p>//TODO 图32</p>
+<p>于是我们就用两个堆,一个大顶堆,一个小顶堆,实现在动态集合中求中位数的操作.插入数据因为涉及堆化,时间复杂度就变成了O(logn),但求中位数,我们只需要返回大顶堆的堆顶数据就行,时间复杂度是O(1).</p>
+<p>实际上,利用两个堆还可以求出其他百分位的数据,原理类似求中位数.例如如何快速求接口的99% 响应时间</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/07/数据结构与算法-13-红黑树/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhangxy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhangxy">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/01/07/数据结构与算法-13-红黑树/" itemprop="url">数据结构与算法(13)_红黑树</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-07T14:34:14+08:00">2019-01-07</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>二叉树在频繁的动态更新中,可能会出现树的高度远大于$$log_2n$$的情况,极端情况下,二叉树会退化成链表,各个操作效率下降.我们需要设计一种平衡二叉查找树,来结局这个问题</p>
+<h2 id="什么是平衡二叉查找树"><a href="#什么是平衡二叉查找树" class="headerlink" title="什么是平衡二叉查找树"></a>什么是平衡二叉查找树</h2><p>严格定义是这样的:二叉树中任意一个节点的左右子树高度相差不能大于1.</p>
+<p>从这个定义来看,满二叉树和完全二叉树都是平衡二叉树.非完全二叉树也有可能是平衡二叉树.</p>
+<p>但是很多平衡二叉查找树其实并没有符合上面的定义,为了实际应用,没必要死抠定义,主要是解决问题.所以,<font color="red">平衡二叉查找树中”平衡”的意思其实就是让整个树左右看起来比较”对称”,比较”平衡”,不要出现左子树很高,右子树很矮的情况.这就让整个树高度相对低一些,提高操作效率</font></p>
+<h2 id="如何定义一个”红黑树”"><a href="#如何定义一个”红黑树”" class="headerlink" title="如何定义一个”红黑树”"></a>如何定义一个”红黑树”</h2><p>红黑树的节点,一类被标记为黑色,一类被标记为红色.除此之外还要满足以下几个要求:</p>
+<ul>
+<li>根节点是黑色的</li>
+<li>每个叶子节点都是黑色的空节点,也就是说叶子节点不存储数据</li>
+<li>任何相邻的节点都不能同时为红色,也就是说红色节点是被黑色节点隔开的</li>
+<li>每个节点,从该节点到达其可达叶子节点的所有路径,都包含相同数目的黑色节点.</li>
+</ul>
+<p>上面”叶子节点都是黑色的空节点”,主要是为了简化红黑树代码而设置的.</p>
+<h2 id="为什么说红黑树是”近似平衡”"><a href="#为什么说红黑树是”近似平衡”" class="headerlink" title="为什么说红黑树是”近似平衡”"></a>为什么说红黑树是”近似平衡”</h2><p>平衡的意思可以等价为性能不退化.”近似平衡”就等价位性能退化不会太严重.</p>
+<p>二叉树的很多操作性能都跟树的高度成正比.一棵及其平衡的二叉树的高度大约是$$log_2n$$,所以要证明红黑树是近似平衡的,我们只需要分析红黑树的高度是否比较稳定的趋近$$log_2n$$就好了.</p>
+<p>我们来分析一下红黑树的高度.</p>
+<font color="red">首先,我们来看,如果将红色节点从红黑树中去掉,那单纯包含黑色节点的红黑树的高度是多少呢?</font>
+
+<p>红色节点删除之后,有些节点就没有负节点了,它们会直接拿这些节点的祖父节点作为父节点,所以之前的二叉树,就变成了四叉树.</p>
+<p>//todo 图20</p>
+<p>前面红黑树定义中有一条:从任意节点到可达的叶子节点的每个路径包含相同数目的黑色节点.我们从四叉树中取出某些节点放到节点位置,四叉树就变成了完全二叉树.所以仅包含黑色节点的四叉树高度,比包含相同节点数的完全二叉树的高度还要小.</p>
+<p>完全二叉树的高度近似$$log_2n$$,这里的四叉黑树的高度低于完全二叉树,所以去掉黑色节点的黑树的高度也不会超过$$log_2n$$.</p>
+<font color="red">那现在把红色节点加回去,高度会变成多少呢?</font>
+
+<p>在红黑树中,红色节点不能相邻,也就是说,有一个红色节点就至少要有一个黑色节点,将它跟其他红色节点隔开.红黑树中包含最多黑色节点的路径不会超过$$log_2n$$,所以加入红色节点后不会超过$$2log_2n$$,也就是说红黑树的高度近似$$2log_2n$$.</p>
+<h2 id="实现红黑树的基本思想"><a href="#实现红黑树的基本思想" class="headerlink" title="实现红黑树的基本思想"></a>实现红黑树的基本思想</h2><p>红黑树平衡的大致过程就是:<font color="red">遇到什么样的节点排布,我们就对应怎么调整.</font>只有按照这些固定规则来操作,就能将一个非平衡的红黑树调整成平衡的.</p>
+<p>在插入和删除节点的过程中,红黑树的第三,第四点要求可能会被破坏.”平衡调整”实际上就是把被破坏的第三,第四点恢复过来.</p>
+<p>有两个非常重要的操作&lt;<font color="red">左旋(rotate left),右旋(rotate right)</font>.左旋的全称是<font color="red">围绕某个节点的左旋</font>.右旋的全称是<font color="red">围绕某个节点的右旋</font>.</p>
+<p>//TODO 图21</p>
+<h3 id="插入的平衡操作"><a href="#插入的平衡操作" class="headerlink" title="插入的平衡操作"></a>插入的平衡操作</h3><p>红黑树规定,插入的节点必须是红色的.而且,二叉查找树中新插入的节点都是放在叶子节点上.所以,关于插入操作的平衡,有两种特殊情况.</p>
+<ul>
+<li>如果插入的节点的父节点是黑色的,那我们什么都不用做,它仍满足红黑树的定义.</li>
+<li>如果插入的节点是根节点,那我们直接改变他的颜色,变成黑色就可以了.</li>
+</ul>
+<p>除此之外,其他情况都会违背红黑树的定义,需要进行调整,调整的过程包含两种操作:<font color="red">左右旋转</font>和<font color="red">改变颜色</font>.</p>
+<p>红黑树的平衡是一个迭代过程,我们把正在处理的节点叫作<font color="red">关注节点</font>.关注节点会随着不停的的迭代处理,而不断发生变化.最开始的关注节点就是新插入的点.</p>
+<p>新节点插入之后,如果平衡被打破,那一般会有三种情况.我们根据每种情况不停的调整,就可以让红黑树继续符合定义.</p>
+<p>为了简化描述,把父节点的兄弟节点叫作叔叔节点,父节点的父节点叫作祖父节点.</p>
+<h4 id="CASE1-如果关注节点是a-它的叔叔节点d是红色-我们依次执行下面操作"><a href="#CASE1-如果关注节点是a-它的叔叔节点d是红色-我们依次执行下面操作" class="headerlink" title="CASE1:如果关注节点是a,它的叔叔节点d是红色,我们依次执行下面操作:"></a>CASE1:如果关注节点是a,它的叔叔节点d是红色,我们依次执行下面操作:</h4><ul>
+<li>将关注节点a的父节点b,叔叔节点d的颜色都设置成黑色;</li>
+<li>将关注节点a的祖父节点c的颜色设置成红色;</li>
+<li>关注节点变成a的祖父节点c;</li>
+<li>调到CASE2或者CASE3</li>
+</ul>
+<p>//TODO 图22</p>
+<h4 id="CASE2-如果关注节点a-它的叔叔节点d是黑色-关注节点a是其父节点b的右子节点"><a href="#CASE2-如果关注节点a-它的叔叔节点d是黑色-关注节点a是其父节点b的右子节点" class="headerlink" title="CASE2: 如果关注节点a,它的叔叔节点d是黑色,关注节点a是其父节点b的右子节点"></a>CASE2: 如果关注节点a,它的叔叔节点d是黑色,关注节点a是其父节点b的右子节点</h4><p>我们就执行下面操作</p>
+<ul>
+<li>关注节点变成节点a的父节点b;</li>
+<li>围绕新的关注节点b左旋;</li>
+<li>跳到CASE3.</li>
+</ul>
+<p>//TODO 图23</p>
+<h4 id="CASE-3-如果关注节点是a-它的叔叔节点是黑色-a是其父节点的左子树节点"><a href="#CASE-3-如果关注节点是a-它的叔叔节点是黑色-a是其父节点的左子树节点" class="headerlink" title="CASE 3:如果关注节点是a,它的叔叔节点是黑色,a是其父节点的左子树节点."></a>CASE 3:如果关注节点是a,它的叔叔节点是黑色,a是其父节点的左子树节点.</h4><p>我们进行如下操作</p>
+<ul>
+<li></li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/29/数据结构与算法-12-二叉树/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhangxy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhangxy">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/12/29/数据结构与算法-12-二叉树/" itemprop="url">数据结构与算法(12)_二叉树</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-29T10:33:12+08:00">2018-12-29</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="先了解树"><a href="#先了解树" class="headerlink" title="先了解树"></a>先了解树</h2><p>“树”这种数据结构类似生活中的”树”,里面的每个元素叫做”节点”;用来连线相邻两个节点之间的关系,我们叫作”父子关系”.</p>
+<p>在如下图中,A节点就是B节点的<font color="red">父节点</font>,B节点是A节点的<font color="red">子节点</font>.B,C,D这三个节点的父节点是同一个节点,所以称它们为<font color="red">兄弟节点</font>.我们把没有父节点的节点叫作<font color="red">根节点</font>,也就是图中的E.我们把没有子节点的节点叫作<font color="red">叶子节点或叶结点</font>,比如图中的H,G,I,J,K,L都是叶子节点.</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/04/05/JavaScrip浏览器对象/#more" rel="contents">
+            <a class="btn" href="/2018/12/29/数据结构与算法-12-二叉树/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1339,7 +1184,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/31/Android保活小节记录/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/28/数据结构与算法-11-哈希算法/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zhangxy">
@@ -1358,7 +1203,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/03/31/Android保活小节记录/" itemprop="url">Android保活记录</a></h1>
+                <a class="post-title-link" href="/2018/12/28/数据结构与算法-11-哈希算法/" itemprop="url">数据结构与算法(11)_哈希算法</a></h1>
         
 
         <div class="post-meta">
@@ -1370,7 +1215,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-31T16:41:43+08:00">2017-03-31</time>
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-28T10:45:14+08:00">2018-12-28</time>
             
 
             
@@ -1391,7 +1236,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/笔记/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
 
                 
                 
@@ -1426,13 +1271,303 @@
 
       
         
-          <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>因为实际业务需要实时接收推送,所以应用保活也成为了必要功能,我承认保活真的是耍流氓~</p>
-<h2 id="灰色保活"><a href="#灰色保活" class="headerlink" title="灰色保活"></a>灰色保活</h2><blockquote>
-<p>灰色保活,目前应用最广泛的手段.利用Android系统漏洞来启动一个前台的Service,区别在于它不会在通知栏出现通知,用户基本没有察觉</p>
-</blockquote>
+          <h2 id="哈希算法"><a href="#哈希算法" class="headerlink" title="哈希算法"></a>哈希算法</h2><p>将任意长度的二进制串映射为固定长度的二进制串,这个映射规则就是<font color="red">哈希算法</font>,而通过原始数据映射之后得到的二进制串就是<font color="red">哈希值</font>.设计一个哈希算法需要满足几点要求:</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/03/31/Android保活小节记录/#more" rel="contents">
+            <a class="btn" href="/2018/12/28/数据结构与算法-11-哈希算法/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/25/数据结构与算法-10-散列表/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhangxy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhangxy">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/12/25/数据结构与算法-10-散列表/" itemprop="url">数据结构与算法(10)_散列表</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-25T14:52:13+08:00">2018-12-25</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="散列表"><a href="#散列表" class="headerlink" title="散列表"></a>散列表</h2><p>散列表英文名是”Hash Table”,我们平时也叫”哈希表”或者”Hash 表”.</p>
+<font color="red">散列表用的是数组支持按照下标随机访问的特性,所以散列表其实就是数组的一种扩展,由数组演化而来.</font>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/12/25/数据结构与算法-10-散列表/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/24/数据结构与算法-9-跳表/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhangxy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhangxy">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/12/24/数据结构与算法-9-跳表/" itemprop="url">数据结构与算法(9)_跳表</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-24T16:47:22+08:00">2018-12-24</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="跳表"><a href="#跳表" class="headerlink" title="跳表"></a>跳表</h2><p>跳表是一种各方面性能都比较优秀的动态数据结构,可以支持快速的插入,删除,查找操作,写起来也不复杂,甚至可以代替红黑树.</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/12/24/数据结构与算法-9-跳表/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1477,7 +1612,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1524,7 +1659,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">16</span>
+                    <span class="site-state-item-count">33</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1551,7 +1686,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">7</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1649,7 +1788,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

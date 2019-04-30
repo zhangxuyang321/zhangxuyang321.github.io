@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.4" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="笔记,算法," />
+
+
+<meta name="description" content="哈希算法将任意长度的二进制串映射为固定长度的二进制串,这个映射规则就是哈希算法,而通过原始数据映射之后得到的二进制串就是哈希值.设计一个哈希算法需要满足几点要求:">
+<meta name="keywords" content="笔记,算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构与算法(11)_哈希算法">
+<meta property="og:url" content="http://yoursite.com/2018/12/28/数据结构与算法-11-哈希算法/index.html">
+<meta property="og:site_name" content="zhangxy">
+<meta property="og:description" content="哈希算法将任意长度的二进制串映射为固定长度的二进制串,这个映射规则就是哈希算法,而通过原始数据映射之后得到的二进制串就是哈希值.设计一个哈希算法需要满足几点要求:">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-28T08:12:12.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据结构与算法(11)_哈希算法">
+<meta name="twitter:description" content="哈希算法将任意长度的二进制串映射为固定长度的二进制串,这个映射规则就是哈希算法,而通过原始数据映射之后得到的二进制串就是哈希值.设计一个哈希算法需要满足几点要求:">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/12/28/数据结构与算法-11-哈希算法/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>数据结构与算法(11)_哈希算法 | zhangxy</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?8087e85c4aa64b0bf3ad5b4a9ed23038";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">zhangxy</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/28/数据结构与算法-11-哈希算法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhangxy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhangxy">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">数据结构与算法(11)_哈希算法</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-28T10:45:14+08:00">2018-12-28</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="哈希算法"><a href="#哈希算法" class="headerlink" title="哈希算法"></a>哈希算法</h2><p>将任意长度的二进制串映射为固定长度的二进制串,这个映射规则就是<font color="red">哈希算法</font>,而通过原始数据映射之后得到的二进制串就是<font color="red">哈希值</font>.设计一个哈希算法需要满足几点要求:</p>
+<a id="more"></a>
+<ul>
+<li>从哈希值不能反像推导出原始数据.(所以哈希算法也叫单向哈希算法)</li>
+<li>对输入数据非常敏感,哪怕原始数据只修改了一个Bit,最后得到的哈希值也大不相同.</li>
+<li>散列冲突的概率要很小,对于不同的原始数据,哈希值相同的概率要非常小;</li>
+<li>哈希算法的执行效率要尽量高效,针对较长的文本,也能快速的计算出哈希值.</li>
+</ul>
+<h2 id="哈希算法的应用"><a href="#哈希算法的应用" class="headerlink" title="哈希算法的应用"></a>哈希算法的应用</h2><h3 id="安全加密"><a href="#安全加密" class="headerlink" title="安全加密"></a>安全加密</h3><p>最常用于加密的哈希算法是<font color="red">MD5</font>和<font color="red">SHA</font>.还有很多其他加密算法比如<font color="red">DES</font>,<font color="red">AES</font>.</p>
+<p>为什么哈希算法无法做到零冲突?</p>
+<p>哈希算法产生的哈希值的长度固定且有限.比如上面提到的MD5例子,哈希值固定是128位二进制串,能表示的数据是有限的,最多能表示2^128个数据,而我们要哈希的数据是无穷的.</p>
+<p>没有绝对安全的加密.越复杂越安全的加密算法,需要计算的时间就越长</p>
+<h3 id="唯一标识"><a href="#唯一标识" class="headerlink" title="唯一标识"></a>唯一标识</h3><p>例如要在海量图库中,搜索一张图片是否存在,我们不能单纯的图片元信息(比如图片名称)来对比,因为图片名称和图片往往是不相符的.那该如何搜索呢?</p>
+<p>比较笨的方法是,用二进制串码一一对比,但是这样比对起来非常耗时.</p>
+<p>我们可以给每一张图片取一个唯一标识或者说信息摘要.比如,可以从图片的二进制码串开头曲100个字节,中间取100个字节,从最后再取100个字节,然后将这300个字节放在一起通过哈希算法,得到一个哈希字符串,用它做图片的唯一标识.通过这个唯一标识来判定图片是否存在.</p>
+<h3 id="数据校验"><a href="#数据校验" class="headerlink" title="数据校验"></a>数据校验</h3><p>BT下载的原理是基于P2P协议的.我们从多个机器上并行下载一个2G电影,这个电影会被分成很多文件块.等所有文件块下载完成后再组装成一个完整的电影.</p>
+<p>但是在下载中,文件块可能下载不全或者被恶意修改.这个时候就需要数据验证.</p>
+<p>我们通过哈希算法,对多个文件块分别取哈希值,并保存在种子文件中.当下载完成后,再通过相同的哈希算法,对下载好的文件逐一求哈希值,然后再跟种子文件中的哈希值比较.</p>
+<h3 id="散列函数"><a href="#散列函数" class="headerlink" title="散列函数"></a>散列函数</h3><p>散列函数实际上也是哈希算法的一种.散列函数是设计一个散列表的关键,它直接决定了散列冲突的概率和散列表的性能.不过,相对哈希算法的其他的应用,散列函数对散列冲突的要求要低很多.即便出现散列冲突,只要不是严重,也可以用开放寻址法活链表法解决.</p>
+<p>不仅如此,散列函数对于散列算法计算得到的值,是否能反向解密也并不关心.散列函数中的散列算法,更加关注散列后的值是否平均分布.散列函数的执行快慢,也会影响到散列函数的性能.所以散列函数的散列算法一般都比较简单,比较追求效率.</p>
+<h3 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h3><p>负载均衡的算法有很多,比如轮训,随机,加权轮询等.</p>
+<p>假如实现一个会话粘滞的负载均衡算法.最直接的方式就是维护一张映射表,这张表的内容是客户端IP地址与服务器编号的映射关系.但是存在如下几个弊端.</p>
+<ul>
+<li>如果客户端很多,映射表可能会很大,比较浪费内存空间</li>
+<li>客户端下线,上线,服务器扩容,缩容都会导致映射失效,这样维护映射表的成本就会很大.</li>
+</ul>
+<p>借助哈希算法可以解决这个问题.<font color="red">通过哈希算法,对客户端ip地址计算哈希值,将取的哈希值与服务器列表的大小进行取模运算,最终得到的值就是应该被路由到的服务器</font>.</p>
+<h3 id="数据分片"><a href="#数据分片" class="headerlink" title="数据分片"></a>数据分片</h3><h4 id="如何统计关键词出现的次数"><a href="#如何统计关键词出现的次数" class="headerlink" title="如何统计关键词出现的次数"></a>如何统计关键词出现的次数</h4><p>假如有1T的日志文件,记录了用户搜索的关键词,如何快速统计出每个关键词的个数?</p>
+<p>我们可以先对数据分片,然后采用多台机器处理的方法,来提高处理速度.我们从搜索记录的日志文件中依次读出每个搜索关键词,并通过哈希函数计算哈希值,然后再跟n取模,得到应该被分配的机器编号.</p>
+<h4 id="如何快速判断图片是否在图库中"><a href="#如何快速判断图片是否在图库中" class="headerlink" title="如何快速判断图片是否在图库中"></a>如何快速判断图片是否在图库中</h4><p>假设现在有1亿图片,此时在单台机器上构建散列表示行不通的.我们同样可以对数据进行分片,然后采用多机处理.准备n台机器,让每台机器维护某一部分图片对应的散列表.每次从图库中读取一个图片,计算唯一标识,然后与机器数n求余取模,得到的值就是对应的机器编号,然后将这个图片的唯一标示和路径发往对应的机器构建散列表.</p>
+<p>当判断是否存在的时候,我们用同样的哈希算法,计算图片的唯一标识,然后与机器个数n求余取模.假设得到的值是k,那就去编号为k的机器中查找.</p>
+<p>估算这1亿图片构建散列表需要多少台机器.</p>
+<p>散列表中每个数据单元包含两个基本信息,哈希值和图片路径.假设通过MD5来计算哈希值,那长度是128bit也就是16字节.文件路径长度上线是256接,假设平均是128字节.如果用链表发来解决冲突,那还需要存储指针指针占用8字节,所以散列表中每个数据单元占用152字节.</p>
+<p>假设一台机器2G内存,散列表装载因子0.75,那一台机器可以给大约1000万(2GB * 0.75 / 152)张图片构建散列表,所以1亿张大概需要十几台机器.</p>
+<h3 id="分布式存储"><a href="#分布式存储" class="headerlink" title="分布式存储"></a>分布式存储</h3><p>面对海量数据.为了提高读写,写入能力一般都采用分布式方式存储数据,比如分布式缓存.我们利用分片思想,通过哈希算法取哈希值,然后对机器个数取模,找到对应的机器编号.</p>
+<p>但是,随着数据增多,原来的10个机器已经无法承受,需要扩容.这时候就变麻烦了.因为并不是增加一台机器这么简单.</p>
+<p>假如原来的数据是对10取模的,比如13这个数据原先取模后存在3号服务器上.现在增加了一台机器,对11取模,这个数据就被分配到了2号服务器.因此所有数据都需要重新计算哈希值,然后重新搬移到对应的机器上.此时所有的缓存都失效了.</p>
+<p>我们需要一种方法,加新机器后并不需要大量数据搬移.这时候就需要<font color="red">一致性哈希算法</font>.</p>
+<p>假设有k个机器,数据的哈希值范围是[0,max].我们将整个范围划分成m个小区间(m远大于k),每个机器复杂</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/笔记/" rel="tag"># 笔记</a>
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/25/数据结构与算法-10-散列表/" rel="next" title="数据结构与算法(10)_散列表">
+                <i class="fa fa-chevron-left"></i> 数据结构与算法(10)_散列表
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/29/数据结构与算法-12-二叉树/" rel="prev" title="数据结构与算法(12)_二叉树">
+                数据结构与算法(12)_二叉树 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/head.jpg"
+                alt="zhangxy" />
+            
+              <p class="site-author-name" itemprop="name">zhangxy</p>
+              <p class="site-description motion-element" itemprop="description">路漫漫其修远兮</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">33</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/zhangxuyang321" target="_blank" title="GitHub">GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="zhangxuyang321@gmail.com" target="_blank" title="E-Mail">E-Mail</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/u/5207372383/home" target="_blank" title="微博">微博</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#哈希算法"><span class="nav-number">1.</span> <span class="nav-text">哈希算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#哈希算法的应用"><span class="nav-number">2.</span> <span class="nav-text">哈希算法的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安全加密"><span class="nav-number">2.1.</span> <span class="nav-text">安全加密</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#唯一标识"><span class="nav-number">2.2.</span> <span class="nav-text">唯一标识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据校验"><span class="nav-number">2.3.</span> <span class="nav-text">数据校验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#散列函数"><span class="nav-number">2.4.</span> <span class="nav-text">散列函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#负载均衡"><span class="nav-number">2.5.</span> <span class="nav-text">负载均衡</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据分片"><span class="nav-number">2.6.</span> <span class="nav-text">数据分片</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#如何统计关键词出现的次数"><span class="nav-number">2.6.1.</span> <span class="nav-text">如何统计关键词出现的次数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何快速判断图片是否在图库中"><span class="nav-number">2.6.2.</span> <span class="nav-text">如何快速判断图片是否在图库中</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分布式存储"><span class="nav-number">2.7.</span> <span class="nav-text">分布式存储</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhangxy</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
